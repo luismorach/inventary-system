@@ -2,11 +2,13 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
-import { product } from 'src/app/interfaces/interfaces';
+import { coin, product } from 'src/app/interfaces/interfaces';
 import { ComunicatorComponetsService } from 'src/app/services/comunicator/comunicator-componets.service';
 import { DinamicTable } from 'src/app/utils/DinamicTable';
 import { ProductosService } from './service/productos.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CoinsService } from '../../configuraciones/service/coins.service';
+import { Alert } from 'src/app/utils/Alert';
 
 @Component({
   selector: 'app-productos-en-almacen',
@@ -15,12 +17,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProductosEnAlmacenComponent extends DinamicTable {
   tableSearch!: FormGroup;
-  data$!:Subscription;
+  data$!: Subscription;
   products: product[] = [];
   title: string[] = [];
   currentData: product[] = [];
   productToDelete!: product;
-  
+  coin!: coin
+
   //Elemento donde se insertaran los numeros 
   //de paginas para la paginacion
   @ViewChild('pagination', { static: false }) override pagination?: ElementRef;
@@ -36,7 +39,7 @@ export class ProductosEnAlmacenComponent extends DinamicTable {
   constructor(private fb: FormBuilder,
     public override renderer: Renderer2,
     private comunicatorSvc: ComunicatorComponetsService, private routes: Router,
-    private productosSvc: ProductosService) {
+    private productosSvc: ProductosService, private coinsSvc: CoinsService) {
     super(renderer)
   }
   ngOnInit() {
@@ -49,6 +52,33 @@ export class ProductosEnAlmacenComponent extends DinamicTable {
       title.push(decodeURI(ruta).toUpperCase());//añado el titulo al array
       this.comunicatorSvc.setTitleComponent(title);
     });
+/* 
+     this.coinsSvc.getAllCoins().subscribe({
+      next: res => {
+        res.forEach((data: any,index:number) => {
+          const formatter = new Intl.NumberFormat(data.language_code+'-'+data.country_code, {
+            style: 'currency',
+            minimumFractionDigits: 2,
+            currency: data.currency_code,
+          })
+          console.log(index+' '+formatter.format(1)+' '+data.country)
+        })
+
+      }
+    })  */
+     const formatter = new Intl.NumberFormat('en-ZW', {
+      style: 'currency',
+      minimumFractionDigits: 2,
+      currency: 'ZWD'
+    })
+    console.log(formatter.format(1)) 
+    this.coinsSvc.getMainCoin().subscribe({
+      next: res => {
+        if (res instanceof Array) {
+          this.coin = res[0]
+        }
+      }
+    })
     this.data$ = this.productosSvc.getProductos().subscribe({
       next: res => { this.currentData = res; this.products = res },
       error: (error: HttpErrorResponse) => {
@@ -69,13 +99,13 @@ export class ProductosEnAlmacenComponent extends DinamicTable {
       numberRows: new FormControl('10')
     });
   }
-    
+
   public error(error: HttpErrorResponse) {
     this.changeModal(this.comunicatorSvc.errorServer(error))
     this.popUp?.nativeElement.showModal()
   }
   redirectToUpdate(data: product) {
-    this.routes.navigate(['/productos/actualizar producto/'+data.id_product])
+    this.routes.navigate(['/productos/actualizar producto/' + data.id_product])
   }
   delete(data: product) {
     this.popUp?.nativeElement.close()
@@ -97,11 +127,11 @@ export class ProductosEnAlmacenComponent extends DinamicTable {
           //elimino el elemento de mi lista de productos totales
           this.products.splice(index, 1)
           //elimino el elemento de mi lista de productos actuales
-          index=this.currentData.indexOf(data)
+          index = this.currentData.indexOf(data)
           this.currentData.splice(index, 1)
           //elimino la fila de mi tabla en la vista
-          let values=this.getValuesToPipe(this.tableSearch)
-          let rowToDelete=index-(values.numberRows*values.indexCurrentPage)
+          let values = this.getValuesToPipe(this.tableSearch)
+          let rowToDelete = index - (values.numberRows * values.indexCurrentPage)
           this.renderer.removeChild(this.row?.nativeElement, this.row?.nativeElement.children[rowToDelete])
           //renderizo la paginacion una vez mas, para que se actualice
           this.createPages(this.tableSearch, this.currentData, this.products)
@@ -110,7 +140,7 @@ export class ProductosEnAlmacenComponent extends DinamicTable {
 
     }
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.data$.unsubscribe();
   }
 

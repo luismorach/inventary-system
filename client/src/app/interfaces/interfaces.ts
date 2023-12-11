@@ -204,6 +204,14 @@ export interface building {
     exchange_dolar: number;
     exchange_euro: number;
 }
+export interface all_coins{
+    country:string;
+    country_code:string;
+    language:string;
+    language_code:string;
+    currency:string;
+    currency_code:string;
+}
 export interface coin {
     id_coin: number;
     name: string;

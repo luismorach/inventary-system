@@ -127,23 +127,35 @@ class VentasController {
     }
     async createVenta(req, res) {
         const { total_sell, coin, exchange, state, discount, type_sell, total_pay, id_user, id_client, sell_products, pays } = req.body;
-        let response = await database_1.default.query('INSERT INTO sells (total_sell,coin,exchange,state,' +
-            'discount,type_sell,total_pay,id_user,id_client) values($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id_sell', [total_sell, coin, exchange, state, discount, type_sell, total_pay, id_user, id_client]);
-        sell_products.forEach(async (data) => {
-            await database_1.default.query('INSERT INTO sell_products (id_sell,id_product,buy_price,sell_price,' +
-                'discount_product,impuest,quantity_products,exist_products,quantity_back)' +
-                'values($1,$2,$3,$4,$5,$6,$7,$8,$9)', [response.rows[0].id_sell, data.id_product, data.buy_price,
-                data.sell_price, data.discount_product, data.impuest, data.quantity_products,
-                data.exist_products - data.quantity_products, data.quantity_back]);
-        });
-        pays.forEach(async (data) => {
-            await database_1.default.query('INSERT INTO pays (id_sell,type,reference,' +
-                'mount,coin,exchange,id_user) values($1,$2,$3,$4,$5,$6,$7)', [response.rows[0].id_sell, data.type, data.reference, data.mount, data.coin,
-                data.exchange, data.id_user]);
-        });
-        res.status(200).json({
-            icon: '', title: '¡Venta Registrada!', content: 'La venta se registró con exito en el sístema'
-        });
+        const client = await database_1.default.connect();
+        await client.query('BEGIN');
+        try {
+            let response = await client.query('INSERT INTO sells (total_sell,coin,exchange,state,' +
+                'discount,type_sell,total_pay,id_user,id_client) values($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id_sell', [total_sell, coin, exchange, state, discount, type_sell, total_pay, id_user, id_client]);
+            sell_products.forEach(async (data) => {
+                await client.query('INSERT INTO sell_products (id_sell,id_product,buy_price,sell_price,' +
+                    'discount_product,impuest,quantity_products,exist_products,quantity_back)' +
+                    'values($1,$2,$3,$4,$5,$6,$7,$8,$9)', [response.rows[0].id_sell, data.id_product, data.buy_price,
+                    data.sell_price, data.discount_product, data.impuest, data.quantity_products,
+                    data.exist_products - data.quantity_products, data.quantity_back]);
+            });
+            pays.forEach(async (data) => {
+                await client.query('INSERT INTO pays (id_sell,type,reference,' +
+                    'mount,coin,exchange,id_user) values($1,$2,$3,$4,$5,$6,$7)', [response.rows[0].id_sell, data.type, data.reference, data.mount, data.coin,
+                    data.exchange, data.id_user]);
+            });
+            await client.query('COMMIT');
+            res.status(200).json({
+                icon: '', title: '¡Venta Registrada!', content: 'La venta se registró con exito en el sístema'
+            });
+        }
+        catch (error) {
+            await client.query('ROLLBACK');
+            throw error;
+        }
+        finally {
+            client.release();
+        }
     }
     async actualizarVenta(req, res) {
         const id_sell = parseInt(req.params.id_sell);

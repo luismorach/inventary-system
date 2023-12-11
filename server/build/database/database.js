@@ -9,5 +9,6 @@ const pool = new pg_1.Pool({
     password: process.env.PASSWORD,
     port: 5432,
 });
+console.log;
 console.log("DB conected");
 exports.default = pool;

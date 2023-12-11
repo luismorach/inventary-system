@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { building, coin,alert } from 'src/app/interfaces/interfaces';
+import { building, coin, alert } from 'src/app/interfaces/interfaces';
 import { DinamicInput } from 'src/app/utils/DinamicInput';
 import { EmpresaService } from '../service/empresa.service';
 @Component({
@@ -11,7 +11,7 @@ import { EmpresaService } from '../service/empresa.service';
 export class DatosDeLaEmpresaComponent extends DinamicInput {
   formBuilding!: FormGroup;
   building!: building;
-  coinsUsed:coin[]=[]
+  coinsUsed: coin[] = []
 
   @ViewChild('popup', { static: true }) override popUp?: ElementRef;
   coins = [{ name: 'Dólar Americano USD', symbol: '$' },
@@ -99,11 +99,14 @@ export class DatosDeLaEmpresaComponent extends DinamicInput {
   ]
   constructor(private fb: FormBuilder,
     private buildingSvc: EmpresaService,
-    public override renderer:Renderer2) {
+    public override renderer: Renderer2) {
     super();
+
   }
 
   ngOnInit() {
+    
+    console.log(this.coins.length)
     this.buildingSvc.getBuildings().subscribe({
       next: res => {
         this.formBuilding.get('document_type')?.setValue(res[0].document_type);
@@ -113,7 +116,7 @@ export class DatosDeLaEmpresaComponent extends DinamicInput {
         this.formBuilding.get('phone_number')?.setValue(res[0].phone_number);
         this.formBuilding.get('email')?.setValue(res[0].email);
         this.formBuilding.get('name_tax')?.setValue(res[0].name_tax);
-        this.formBuilding.get('tax_rate')?.setValue(''+res[0].tax_rate*100);
+        this.formBuilding.get('tax_rate')?.setValue('' + res[0].tax_rate * 100);
         this.formBuilding.get('show_tax')?.setValue('' + res[0].show_tax);
         this.building = res[0];
       }
@@ -144,37 +147,37 @@ export class DatosDeLaEmpresaComponent extends DinamicInput {
     this.formBuilding.get('name_tax')?.setValue('');
     this.formBuilding.get('tax_rate')?.setValue('');
   }
-  validarUpdate(){
-    if(this.formBuilding.get('document_type')?.value===this.building.document_type && 
-    this.formBuilding.get('document_number')?.value===this.building.document_number&&
-    this.formBuilding.get('name')?.value===this.building.name &&
-    this.formBuilding.get('address')?.value===this.building.address &&
-    this.formBuilding.get('phone_number')?.value===this.building.phone_number &&
-    this.formBuilding.get('email')?.value===this.building.email &&
-    this.formBuilding.get('name_tax')?.value===this.building.name_tax &&
-    this.formBuilding.get('tax_rate')?.value=== ''+(this.building.tax_rate*100) &&
-    this.formBuilding.get('show_tax')?.value===''+this.building.show_tax){
-      let msj:alert={
-        icon:'',
-        title:'¿Estás seguro?',
-        content:'No ha modificado los datos de la empresa ¿desea continuar?'
+  validarUpdate() {
+    if (this.formBuilding.get('document_type')?.value === this.building.document_type &&
+      this.formBuilding.get('document_number')?.value === this.building.document_number &&
+      this.formBuilding.get('name')?.value === this.building.name &&
+      this.formBuilding.get('address')?.value === this.building.address &&
+      this.formBuilding.get('phone_number')?.value === this.building.phone_number &&
+      this.formBuilding.get('email')?.value === this.building.email &&
+      this.formBuilding.get('name_tax')?.value === this.building.name_tax &&
+      this.formBuilding.get('tax_rate')?.value === '' + (this.building.tax_rate * 100) &&
+      this.formBuilding.get('show_tax')?.value === '' + this.building.show_tax) {
+      let msj: alert = {
+        icon: '',
+        title: '¿Estás seguro?',
+        content: 'No ha modificado los datos de la empresa ¿desea continuar?'
       }
       this.changeModal(msj)
       this.popUp?.nativeElement.showModal()
-    }else{
+    } else {
       this.update()
     }
   }
-  update(){
-    let msj:alert={
-      icon:'',
-      title:'¿Estás seguro?',
-      content:'cambio?'
+  update() {
+    let msj: alert = {
+      icon: '',
+      title: '¿Estás seguro?',
+      content: 'cambio?'
     }
     this.changeModal(msj)
     this.popUp?.nativeElement.showModal()
   }
-  acept(){
+  acept() {
 
   }
 }

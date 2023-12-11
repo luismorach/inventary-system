@@ -5,12 +5,16 @@ function routeHelper(callback: any) {
         try {
             await callback(req,res)
         } catch (error:any) {
-            res.json({ icon:'fa-regular fa-circle-xmark',title:'Ocurrió un error inesperado',content: error})
+            res.json({ icon:'fa-regular fa-circle-xmark',
+            title:'Ocurrió un error inesperado',
+            content: error.message})
         }
-    }
+    } 
 }
 function errorMiddleware(error: Error, req: Request, res: Response, next: NextFunction) {
-    res.json({ icon:'fa-regular fa-circle-xmark',title:'Ocurrió un error inesperado',content: error.message })
+    res.json({ icon:'fa-regular fa-circle-xmark',
+    title:'Ocurrió un error inesperado',
+    content: error.message })
 }
 module.exports={
     routeHelper,

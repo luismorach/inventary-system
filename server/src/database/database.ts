@@ -7,5 +7,6 @@ const pool = new Pool({
   password: process.env.PASSWORD,
   port: 5432,
 })
+console.log
 console.log("DB conected")
 export default pool;  

@@ -81,20 +81,30 @@ class ComprasController {
     }
     async createCompra(req, res) {
         const { total_buy, coin, exchange, id_provider, id_user, buy_products } = req.body;
-        let response = await database_1.default.query('INSERT INTO buys (total_buy,coin,exchange,id_provider,id_user)' +
-            'values($1,$2,$3,$4,$5) RETURNING id_buy', [total_buy, coin, exchange, id_provider, id_user]);
-        buy_products.forEach(async (data) => {
-            await database_1.default.query('INSERT INTO buy_products (id_buy,id_product,buy_price,sell_price,' +
-                'weighted_averages_sell,quantity_products,exist_products,quantity_back,' +
-                'weighted_averages_buy,discount_product,impuest)' +
-                'values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', [response.rows[0].id_buy, data.id_product, data.buy_price,
-                data.sell_price, data.weighted_averages_sell, data.quantity_products,
-                data.exist_products, data.quantity_back, data.weighted_averages_buy,
-                data.discount_product, data.impuest]);
-        });
-        res.status(200).json({
-            icon: '', title: '¡Compra Registrado!', content: 'La compra se registró con exito en el sístema'
-        });
+        const client = await database_1.default.connect();
+        await client.query('BEGIN');
+        try {
+            let response = await client.query('INSERT INTO buys (total_buy,coin,exchange,id_provider,id_user)' +
+                'values($1,$2,$3,$4,$5) RETURNING id_buy', [total_buy, coin, exchange, id_provider, id_user]);
+            console.log(response);
+            buy_products.forEach(async (data) => {
+                await client.query('INSERT INTO buy_products (id_buy,id_product,buy_price,sell_price,' +
+                    'weighted_averages_sell,quantity_products,exist_products,quantity_back,' +
+                    'weighted_averages_buy,discount_product,impuest)' +
+                    'values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', [response.rows[0].id_buy, data.id_product, data.buy_price,
+                    data.sell_price, data.weighted_averages_sell, data.quantity_products,
+                    data.exist_products, data.quantity_back, data.weighted_averages_buy,
+                    data.discount_product, data.impuest]);
+            });
+            client.query('COMMIT');
+            res.status(200).json({
+                icon: '', title: '¡Compra Registrado!', content: 'La compra se registró con exito en el sístema'
+            });
+        }
+        catch (error) {
+            client.query('ROLLBACK');
+            throw error;
+        }
     }
     async actualizarCompra(req, res) {
         const id_buy = parseInt(req.params.id_buy);

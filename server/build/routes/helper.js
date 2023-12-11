@@ -6,12 +6,16 @@ function routeHelper(callback) {
             await callback(req, res);
         }
         catch (error) {
-            res.json({ icon: 'fa-regular fa-circle-xmark', title: 'Ocurrió un error inesperado', content: error });
+            res.json({ icon: 'fa-regular fa-circle-xmark',
+                title: 'Ocurrió un error inesperado',
+                content: error.message });
         }
     };
 }
 function errorMiddleware(error, req, res, next) {
-    res.json({ icon: 'fa-regular fa-circle-xmark', title: 'Ocurrió un error inesperado', content: error.message });
+    res.json({ icon: 'fa-regular fa-circle-xmark',
+        title: 'Ocurrió un error inesperado',
+        content: error.message });
 }
 module.exports = {
     routeHelper,

@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { ComunicatorComponetsService } from 'src/app/services/comunicator/comunicator-componets.service';
 import { DinamicInput } from 'src/app/utils/DinamicInput';
 import { ProductosService } from '../../productos/productos-en-almacen/service/productos.service';
-import { building, product } from 'src/app/interfaces/interfaces';
+import { all_coins, building, product } from 'src/app/interfaces/interfaces';
 import { Columns, ITable, Img, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper'
 import { EmpresaService } from '../../configuraciones/service/empresa.service';
+import { CoinsService } from '../../configuraciones/service/coins.service';
 var pdfFonts = require("pdfmake/build/vfs_fonts"); // fonts provided for pdfmake
 
 // If any issue using previous fonts import. you can try this:
@@ -23,11 +24,13 @@ export class ReporteDeInventarioComponent extends DinamicInput {
   formGenerateReport!: FormGroup;
   products: product[] = []
   empresa!: building
+  coins:all_coins[]=[]
   constructor(private fb: FormBuilder,
     private comunicatorSvc: ComunicatorComponetsService,
     private routes: Router,
     private productsSvc: ProductosService,
-    private empresaSvc: EmpresaService) {
+    private empresaSvc: EmpresaService,
+    private coinsSvc:CoinsService) {
     super();
   }
   ngOnInit() {
@@ -40,6 +43,10 @@ export class ReporteDeInventarioComponent extends DinamicInput {
       title.push(decodeURI(ruta).toUpperCase());//añado el titulo al array
       title.push("fas fa-box-open fa-fw");//aañado el icono del titulo al array
       this.comunicatorSvc.setTitleComponent(title);
+    })
+    this.coinsSvc.getAllCoins().subscribe(res=>{
+      if (res instanceof Array)
+        this.coins = res
     })
     this.productsSvc.getProductos().subscribe(res => {
       if (res instanceof Array)
@@ -71,7 +78,8 @@ export class ReporteDeInventarioComponent extends DinamicInput {
       ]).end)
     pdf.add(new Txt('Reporte de inventario general').alignment('center')
       .margin([0, 50, 0, 20]).fontSize(10).end)
-    pdf.add(this.createTables())
+    //pdf.add(this.createTables())
+    pdf.add(this.createProv())
     pdf.create().open()
   }
   createTables(): ITable {
@@ -133,5 +141,38 @@ export class ReporteDeInventarioComponent extends DinamicInput {
       }
     });
 
+  }
+  ngOnDestroy(){
+    this.createPDF()
+  }
+  createProv(): ITable {
+    return new Table([
+      this.prov().header,
+      ...this.prov().body
+    ]).alignment('center').fontSize(8).widths([15,100,30,80,30,80,30,80]).heights(rowIndex => {
+      return rowIndex === 0 ? 13 : 0
+    }).layout({
+      fillColor(rowIndex: number | undefined, node: any, columnIndex: number | undefined): string {
+        return rowIndex === 0 ? '#cccccc' : ''
+      },
+    }).end
+    
+  }
+  prov() {
+    let aux = ['N°', 'pais', 'codigo del pais', 'idioma','codigo del idioma', 'moneda',
+    'codigo de moneda','example'];
+    let other = this.coins.map((coin: all_coins, index: number) => [
+      index + 1,coin.country,coin.country_code,coin.language,coin.language_code,coin.currency,
+      coin.currency_code,this.currencyFormatter(coin.language_code,coin.country_code,coin.currency_code,1)
+    ])
+    return { header: aux, body: other }
+  }
+  currencyFormatter(languague_code:string,country_code:string,currency_code:string,value: number) {
+    const formatter = new Intl.NumberFormat(languague_code+'-'+country_code, {
+      style: 'currency',
+      minimumFractionDigits: 2,
+      currency: currency_code,
+    })
+    return formatter.format(value)
   }
 }

@@ -4,10 +4,10 @@
 /*estilos a todo el documento*/
 * {
   font-family: 'roboto light';
-  font-size: 1.2rem;
+  font-size: .8rem;
 }
 
-body {
+body { 
   margin: 0px;
   padding: 0px;
   overflow: auto;
@@ -154,6 +154,7 @@ body {
   position: absolute;
   top: 20px;
   color: #676d74;
+  font-size: 1.2rem;
 }
 
 .ratio-buttons {
@@ -183,7 +184,7 @@ body {
   background-color: transparent;
   height: 3rem;
   color: #676d74;
-
+  font-size: 1.2rem;
 }
 
 .form-button {
@@ -348,6 +349,7 @@ body {
   margin: 2rem 0rem;
   width: 100%;
   background-color: white;
+  
 }
 
 .table-title {
@@ -401,6 +403,7 @@ td{
 .dataTable-length {
   color: #858796;
   font-family: roboto;
+  
   font-weight: 700;
 }
 
@@ -420,6 +423,7 @@ td{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  
 }
 
 .input-search {
@@ -447,6 +451,7 @@ td{
 .table td {
   padding: 0.75rem;
   border-top: 1px solid #e3e6f0;
+  font-size: 1rem;
 }
 
 .table thead th {

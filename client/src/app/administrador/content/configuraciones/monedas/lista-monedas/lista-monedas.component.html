@@ -1,0 +1,93 @@
+<div class="table-container">
+    <div class="table-title">
+        <h6>Cajas Registradas</h6>
+    </div>
+    <div class="table-body">
+        <div class="search-pagination" [formGroup]="tableSearch">
+            <div class="dataTable-length">
+                <label>Mostrar
+                    <select name="dataTable_length" 
+                    formControlName="numberRows" 
+                    class="custom-select"
+                        (change)="createPages(tableSearch,currentData,all_coins)">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select> entradas</label>
+            </div>
+            <div class="dataTable-filter">
+                <label>Buscar:
+                    <input formControlName="search" 
+                    class="input-search dataTable-filter" 
+                    (keyup)="createPages(tableSearch,currentData,all_coins)">
+                </label>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" >
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>País</th>
+                        <th>Código del país</th>
+                        <th>ídioma</th>
+                        <th>Código del idioma</th>
+                        <th>Moneda</th>
+                        <th>Código de la moneda</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                
+                <tbody #rows>
+                    <tr *ngFor="let data of all_coins | 
+                    tableFilter:getValuesToPipe(tableSearch);let i=index" >
+                        <td>{{i+1}}</td>
+                        <td>{{data.country}}</td>
+                        <td>{{data.country_code}}</td>
+                        <td>{{data.language}}</td>
+                        <td>{{data.language_code}}</td>
+                        <td>{{data.currency}}</td>
+                        <td>{{data.currency_code}}</td>
+                        <td class="icon" (click)="redirectToUpdate(data)"><i class="fa fa-arrows-rotate update"></i></td>
+                        <td class="icon"(click)="openModalToDelete(); registerToDelete=data">
+                            <i class="fa fa-trash-can delete"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="search-pagination">
+            <div class="dataTables_info" #dataTables_info>
+            </div>
+            <div class="pagination-responsive">
+                <ul class="pagination" #pagination>
+                    <li class="previous page-item dataTables_info items"
+                        [class.disable]="getValuesToPipe(tableSearch).indexCurrentPage===0"
+                        [class.active]="getValuesToPipe(tableSearch).indexCurrentPage!=0" 
+                        (click)="previousPage(tableSearch,currentData,all_coins)">
+                        Previous
+                    </li>
+
+                    <li class="next dataTables_info active items" #next
+                        [class.disable]="getValuesToPipe(tableSearch).indexCurrentPage===numberPages-1" 
+                        (click)="nextPage(tableSearch,currentData,all_coins)">
+                        Next
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<dialog class="dialog" #popup>
+    <i class="fa fa-arrows-rotate"></i>
+    <h3>¿Estas seguro?</h3>
+    <p>Lois datos seran guardados en el sistema</p>
+    <div>
+        <button class="form-button btn-save" (click)="delete(registerToDelete)">
+            &nbsp;&nbsp;ACEPTAR</button>
+        <button *ngIf="this.popUp?.nativeElement.children[1].textContent === '¿Estas seguro?'"
+         class="form-button btn-save" (click)="cancel(popUp)">
+            &nbsp;&nbsp;CANCELAR</button>
+    </div>
+</dialog>

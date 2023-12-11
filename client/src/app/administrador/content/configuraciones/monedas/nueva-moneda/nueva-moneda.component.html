@@ -1,0 +1,117 @@
+<div class="form-container">
+    <h3 class="form-title">
+        <i class="far fa-address-card"></i>
+        &nbsp;Información de la moneda
+    </h3>
+    <div class="form" [formGroup]="newCoin">
+        <div class="form-group">
+            <div class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(newCoin,'country')&&
+            elementHasFocus[0],'input-on-focus-fail':!verifyStyleInput(newCoin,'country')}">
+                <label class="form-label" [ngClass]="{'label-on-focus-down':elementHasFocus[0]&&positionLabel[0],
+                'label-on-focus-up': elementHasFocus[0]&&!positionLabel[0]}"
+                    [ngStyle]="animationLabel(newCoin,'country')">
+                    Pais
+                    <i class="fab fa-font-awesome-alt"></i>
+                </label>
+                <input autofocus formControlName="country"  (focus)="isFocused(0,newCoin,'country')"
+                    (focusout)="isFocused(0,newCoin,'country')" class="form-input"
+                    [ngStyle]="styleForeground(newCoin,'country')">
+            </div>
+            <div class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(newCoin,'country_code')&&
+            elementHasFocus[1],'input-on-focus-fail':!verifyStyleInput(newCoin,'country_code')}">
+                <label class="form-label" [ngClass]="{'label-on-focus-down':elementHasFocus[1]&&positionLabel[1],
+                'label-on-focus-up': elementHasFocus[1]&&!positionLabel[1]}"
+                    [ngStyle]="animationLabel(newCoin,'country_code')">
+                    código del pais
+                    <i class="fab fa-font-awesome-alt"></i>
+                </label>
+                <input autofocus formControlName="country_code"  (focus)="isFocused(1,newCoin,'country_code')"
+                    (focusout)="isFocused(1,newCoin,'country_code')" class="form-input"
+                    [ngStyle]="styleForeground(newCoin,'country_code')">
+            </div>
+            <div class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(newCoin,'language')&&
+            elementHasFocus[2],'input-on-focus-fail':!verifyStyleInput(newCoin,'language')}">
+                <label class="form-label" [ngClass]="{'label-on-focus-down':elementHasFocus[2]&&positionLabel[2],
+                'label-on-focus-up': elementHasFocus[2]&&!positionLabel[2]}"
+                    [ngStyle]="animationLabel(newCoin,'language')">
+                    idioma
+                    <i class="fab fa-font-awesome-alt"></i>
+                </label>
+                <input autofocus formControlName="language"  (focus)="isFocused(2,newCoin,'language')"
+                    (focusout)="isFocused(2,newCoin,'language')" class="form-input"
+                    [ngStyle]="styleForeground(newCoin,'language')">
+            </div>
+
+            <div class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(newCoin,'language_code')&&
+            elementHasFocus[3],'input-on-focus-fail':!verifyStyleInput(newCoin,'language_code')}">
+                <label class="form-label" [ngClass]="{'label-on-focus-down':elementHasFocus[3]&&positionLabel[3],
+                'label-on-focus-up': elementHasFocus[3]&&!positionLabel[3]}"
+                    [ngStyle]="animationLabel(newCoin,'language_code')">
+                    código del idioma
+                    <i class="fab fa-font-awesome-alt"></i>
+                </label>
+                <input autofocus formControlName="language_code"  (focus)="isFocused(3,newCoin,'language_code')"
+                    (focusout)="isFocused(3,newCoin,'language_code')" class="form-input"
+                    [ngStyle]="styleForeground(newCoin,'language_code')">
+            </div>
+
+            <div class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(newCoin,'currency')&&
+            elementHasFocus[4],'input-on-focus-fail':!verifyStyleInput(newCoin,'currency')}">
+                <label class="form-label" [ngClass]="{'label-on-focus-down':elementHasFocus[4]&&positionLabel[4],
+                'label-on-focus-up': elementHasFocus[4]&&!positionLabel[4]}"
+                    [ngStyle]="animationLabel(newCoin,'currency')">
+                    moneda
+                    <i class="fab fa-font-awesome-alt"></i>
+                </label>
+                <input autofocus formControlName="currency"  (focus)="isFocused(4,newCoin,'currency')"
+                    (focusout)="isFocused(4,newCoin,'currency')" class="form-input"
+                    [ngStyle]="styleForeground(newCoin,'currency')">
+            </div>
+
+            <div class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(newCoin,'currency_code')&&
+            elementHasFocus[5],'input-on-focus-fail':!verifyStyleInput(newCoin,'currency_code')}">
+                <label class="form-label" [ngClass]="{'label-on-focus-down':elementHasFocus[5]&&positionLabel[5],
+                'label-on-focus-up': elementHasFocus[5]&&!positionLabel[5]}"
+                    [ngStyle]="animationLabel(newCoin,'currency_code')">
+                    código del la moneda
+                    <i class="fab fa-font-awesome-alt"></i>
+                </label>
+                <input autofocus formControlName="currency_code"  (focus)="isFocused(5,newCoin,'currency_code')"
+                    (focusout)="isFocused(5,newCoin,'currency_code')" class="form-input"
+                    [ngStyle]="styleForeground(newCoin,'currency_code')">
+            </div>
+           
+        </div>
+        <div class="form-actions">
+            <div *ngIf="this.routes.url.includes('nueva')">
+                <button class="form-button" id="btn-success" [ngClass]="{'btn-save':newCoin.valid}"
+                    (click)="openModal(newCoin)">
+                    <i class="far fa-save"></i>
+                    &nbsp;&nbsp;ACEPTAR</button>
+                <button class="form-button btn-clean" id="btn-clean" (click)="clean()">
+                    <i class="fas fa-paint-roller"></i>
+                    &nbsp;&nbsp;LIMPIAR</button>
+            </div>
+            <div *ngIf="this.routes.url.includes('actualizar')">
+                <button class="form-button" [ngClass]="{'btn-update':newCoin.valid}" 
+                (click)="openModal(newCoin)">
+                    <i class="fa fa-arrows-rotate"></i>
+                    &nbsp;&nbsp;ACTUALIZAR</button>
+            </div>
+        </div>
+        <p class="form-info">Los campos marcados con <i class="fab fa-font-awesome-alt"></i>
+            son obligatorios</p>
+        <dialog class="dialog" #popup>
+            <i class="fa-regular fa-circle-question" ></i>
+            <h3>¿Estás seguro?</h3>
+            <p>Los datos seran guardados en el sistema</p>
+            <div>
+                <button class="form-button btn-save" (click)="acept()">
+                    &nbsp;&nbsp;ACEPTAR</button>
+                <button *ngIf="this.popUp?.nativeElement.children[1].textContent === '¿Estás seguro?'"
+                 class="form-button btn-cancel" (click)="cancel(popUp)">
+                    &nbsp;&nbsp;CANCELAR</button>
+            </div>
+        </dialog>
+    </div>
+</div>

@@ -48,8 +48,8 @@
                     <td>{{i+1}}</td>
                     <td>{{product.barcode}}</td>
                     <td>{{product.name}} &nbsp; {{product.mark}}&nbsp;{{product.model}}</td>
-                    <th>{{product.buy_price}}</th>
-                    <th>{{product.sell_price}}</th>
+                    <th>{{product.buy_price|currency:'VNS'}}</th>
+                    <th>{{product.sell_price|currency:coin.symbol}}</th>
                     <th>{{product.discount|percent:'2.2-2'}}</th>
                     <th>{{product.sell_quantity}}</th>
                     <th>{{product.exist_quantity}}</th>

@@ -3,6 +3,8 @@ div {
     height: 100%;
     background-color: rgb(245, 245, 245);
     transition: all 0.25s ease-in-out;
+    border: 1px solid rgb(245, 245, 245); ;
+    box-sizing: border-box;
 }
 
 .show {
