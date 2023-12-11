@@ -105,8 +105,10 @@ class ComprasController {
                 icon: '', title: '¡Compra Registrado!', content: 'La compra se registró con exito en el sístema'
             })
         } catch (error: any) {
-            client.query('ROLLBACK')
+           await client.query('ROLLBACK')
             throw error
+        }finally{
+            client.release()
         }
        
         

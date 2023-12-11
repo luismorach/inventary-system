@@ -102,8 +102,11 @@ class ComprasController {
             });
         }
         catch (error) {
-            client.query('ROLLBACK');
+            await client.query('ROLLBACK');
             throw error;
+        }
+        finally {
+            client.release();
         }
     }
     async actualizarCompra(req, res) {
