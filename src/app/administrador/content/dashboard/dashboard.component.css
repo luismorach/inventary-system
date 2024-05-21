@@ -1,0 +1,118 @@
+.main-container{
+    position: relative;
+    height: calc(100% - 50px);
+    background-color: rgb(245, 245, 245);
+    overflow: auto;
+}
+.body-container {
+    padding: 1rem;
+  
+  }
+  
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .coins {
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .coins div {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .coins div h6 {
+  
+    font-size: 1rem;
+    font-weight: 800;
+  }
+  
+  .coins div i {
+    color: #03a9f4;
+    padding: .5rem;
+  }
+  
+  .coins div i:hover {
+    background-color: rgba(150, 150, 150, .2);
+    border-radius: 2px;
+  
+  }
+  
+  .card::before {
+    content: "";
+    background: #0c00ad;
+    width: 0%;
+    height: 3px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transition: all .3s;
+  }
+  
+  .card:hover:before {
+    width: 100%;
+    left: 0;
+    border-bottom-left-radius: 0.35rem;
+    border-bottom-right-radius: 0.35rem;
+  }
+  
+  .card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
+    min-width: 16rem;
+    max-width: 20rem;
+    margin: 1rem;
+    word-wrap: break-word;
+    height: 5rem;
+    padding: 1rem;
+    background-color: #fff;
+    cursor: pointer;
+    color: #5a5c69;
+    background-clip: border-box;
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+  
+  }
+  
+  .title-option-dashboard {
+    font-family: roboto;
+    font-weight: 700;
+    font-size: .7rem;
+    margin-bottom: .55rem;
+  }
+  
+  .info {
+    font-family: roboto;
+    color: #5a5c69;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  
+  .card i {
+    position: absolute;
+    height: 100%;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #dddfeb;
+    top: 40%;
+    left: 80%;
+  }
+  
+  @media(max-width: 992px) {
+    .options {
+      justify-content: space-around;
+    }
+  }

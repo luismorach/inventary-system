@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="header">
+        <div class="operation">
+            <p>Operacion:</p>
+            <select [(ngModel)]="operation">
+                <option routerLink="/cajero/nueva venta" value="nueva venta">Nueva venta</option>
+                <option value="detalles venta" (click)="validateOpenModalTicket()">
+                    Detalles de venta</option>
+            </select>
+        </div>
+        <p>{{date|date:'dd/MM/yyyy'}}</p>
+        <p *ngIf="clock as c">{{c.hour}}:{{c.minutes}}:{{c.seconds}} {{c.period}}</p>
+
+        <p *ngIf="account as a">Vendedor: {{a.names_user}} {{a.last_names_user}}</p>
+        <p *ngIf="name_register">Caja: {{name_register}}</p>
+
+        <div class="options-user">
+            <i class="fa fa-user-cog user" routerLinkActive="activeLink" (click)="open(userModal)"></i>
+            <i class="fa fa-power-off close" (click)="close()"></i>
+        </div>
+
+
+    </div>
+    <router-outlet></router-outlet>
+</div>
+
+<dialog #user class="modal">
+    <div class="header">
+        <h2 class="title">Actualizar cuenta</h2>
+        <button class="btn-cerrar-dialog" (click)="closeModal(userModal)">x</button>
+    </div>
+    <app-nuevo-usuario [isOpenModal]="userModal?.nativeElement.open" [account]="account"></app-nuevo-usuario>
+</dialog>
+
+
+<dialog #modalTicketVenta class="quantity">
+    <div class="header">
+        <h2 class="title">Detalles de la venta</h2>
+        <button class="btn-cerrar-dialog" (click)="closeModal(this.modalTicket);operation='nueva venta'">x</button>
+    </div>
+    <div class="form" [formGroup]="formTicket">
+
+        <app-input class="formControl" [formGroup]="formTicket" [control]="'ticketNumber'"
+        [labelInfo]="{title:'  Ingrese el N° de la factura',required:false,type:'text'}"></app-input>
+    </div>
+
+
+    <div class="form-actions">
+        <button class="form-button btn" [ngClass]="{'enable aceptar':this.formTicket.get('ticketNumber')?.value>0}"
+            (click)="redirectToDetallesVenta();">
+            <i class="fa-regular fa-circle-check"></i> &nbsp;&nbsp;ACEPTAR</button>
+        <button class="form-button btn enable" style="color:#f44336"
+            (click)="closeModal(this.modalTicket);operation='nueva venta'" >
+            <i class="far fa-times-circle"></i> &nbsp;&nbsp;CANCELAR</button>
+    </div>
+</dialog>
+
+<dialog #pay class="pay">
+    <app-pay [message]="msjPay" (messageEvent)="receiveMessagePay($event)"></app-pay>
+</dialog>

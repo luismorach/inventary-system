@@ -1,0 +1,5 @@
+@media (max-width: 330px) {
+    .list-options li{
+        height: 50px;
+    }
+  }

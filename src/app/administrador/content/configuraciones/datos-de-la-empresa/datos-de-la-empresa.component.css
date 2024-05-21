@@ -1,0 +1,20 @@
+.add {
+    align-self: flex-end;
+    margin-bottom: 3rem;
+    margin-left: 1rem;
+    padding: .8rem;
+    border-radius: .5rem;
+    cursor: not-allowed;
+    color: gray;
+}
+.add-active{
+    color: #03a9f4;
+    cursor: pointer;
+}
+
+.add:hover {
+    background-color: #EBEBEB;
+}
+.btn-save,.btn-cancel{
+    margin-top:0px;
+}

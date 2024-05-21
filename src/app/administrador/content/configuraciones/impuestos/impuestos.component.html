@@ -1,0 +1,33 @@
+<div class="scroll info-container container">
+    <h2 class="title">
+        <i class="{{title[0]}}">
+        </i> &nbsp;{{title[1]}}
+    </h2>
+    <p class="msj">En el módulo IMPUESTOS usted podrá registrar impuestos en 
+        el sistema para poder asignarselos a los productos que corresponda, además podrá 
+        actualizar los datos de los impuestos, 
+        realizar búsquedas o eliminarlos si lo desea. 
+    </p>
+    <ul class="list-options">
+        <li [ngClass]="selectedClass(option1)">
+            <a routerLink="nuevo impuesto" 
+            [class.active]="option1" class="option-component">
+                <div class="container">
+                    <i class="fa-solid fa-landmark"></i>
+                    &nbsp;&nbsp;NUEVO IMPUESTO
+                </div>
+            </a> 
+        </li>
+        <li [ngClass]="selectedClass(option2)">
+            <a routerLink="lista impuestos"
+            [class.active]="option2" class="option-component">
+                <div class="container">
+                    <i class="fas fa-clipboard-list fa-fw"></i>
+                    &nbsp;&nbsp;LISTA DE IMPUESTOS
+                </div>
+            </a>
+        </li>
+        
+    </ul>        
+    <router-outlet></router-outlet>      
+</div>

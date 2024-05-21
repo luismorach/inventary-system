@@ -1,0 +1,77 @@
+<div class="fondo">
+    <div class="login scroll">
+        <div class="panel">
+            <div class="sing" [formGroup]="formLogin">
+                <h3 class="title font">Inicio de sesión</h3>
+                <div class="control ">
+                    <label class="font">Documento de identificación</label>
+                    <div class="input">
+                        <select formControlName="document_type_user">
+                            <option>V- </option>
+                            <option>E- </option>
+                            <option>P- </option>
+                            <option>J- </option>
+                            <option>G- </option>
+                        </select>
+                        <input formControlName="document_number_user" type="text" (keypress)="entryValidate($event,false)">
+
+                    </div>
+                </div>
+                <div class="control">
+                    <label class="font">Contraseña</label>
+                    <div class="input">
+                        <i class="fa-solid fa-key"></i>
+
+                        <input formControlName="password_user" type="password"
+                            (keyup)="($event.key==='Enter')?login():null">
+                    </div>
+                </div>
+                
+                <p (click)="openRecoverPasswordModal()" class="font">¿Olvidó su contraseña?</p>
+                <button class="btn font" [ngClass]="{'enable': formLogin.valid && !logging}"
+                    [disabled]="formLogin.invalid && !logging" (click)="login()">
+                    {{textButton}}
+                </button>
+            </div>
+        </div>
+        <div class="style-login">
+
+
+            <p id="cabezera">Nos ocupamos de lo que a ti te preocupa.</p>
+            <p id="footer">Se felíz.</p>
+        </div>
+    </div>
+</div>
+
+<dialog class="modal" #recoverPassword>
+    <div class="header">
+        <h2 class="title font">Recuperar contraseña</h2>
+        <button class="btn-cerrar-dialog" (click)="closeModal()">x</button>
+    </div>
+    
+    <div [formGroup]="formRecover">
+        <div class="control ">
+            <label class="font">Documento de identificación</label>
+            <div class="input">
+                <select formControlName="document_type_recover">
+                    <option>V- </option>
+                    <option>E- </option>
+                    <option>P- </option>
+                    <option>J- </option>
+                    <option>G- </option>
+                </select>
+                <input formControlName="document_number_recover" type="text" (keypress)="entryValidate($event,false)">
+
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="form-button" [ngClass]="{'btn-save':formRecover.valid && !sendingEmail}"
+                 [disabled]="formRecover.invalid && !sendingEmail"
+                (click)="forgotPassword()"> &nbsp;&nbsp;{{textBtnRecoverPassword}}
+            </button>
+            <button class="form-button btn-cancel" (click)="closeModal()">
+                &nbsp;&nbsp;CANCELAR</button>
+        </div>
+    </div>
+</dialog>

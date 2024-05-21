@@ -1,0 +1,9 @@
+<div class="dialog" #popup>
+    <i class="fa-regular fa-circle-xmark error"></i>
+    <h3>Ocurrió un error inesperado</h3>
+    <p *ngIf="message">{{message}}</p>
+    <div>
+        <button (click)="toBack()"
+         class="form-button btn-save"><i class="fas fa-reply"></i> &nbsp;REGRESAR</button>
+    </div>
+</div>

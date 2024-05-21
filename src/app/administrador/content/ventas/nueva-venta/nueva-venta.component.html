@@ -1,0 +1,186 @@
+<div class="main-container">
+    <div class="left-container">
+        <p>Ingrese el código de barras del producto y luego haga clic en
+            <strong>“Verificar producto”</strong>
+            para cargar los datos en caso de que el producto ya este registrado, en caso contrario
+            se cargará el formulario para registrar un nuevo producto.
+        </p>
+        <div class="addSell">
+            <div class="form" [formGroup]="sellForm">
+
+                <div class="form-group">
+                    <button class="btn enable" (click)="showProductModal(true)">
+                        <i class="fa fa-search"></i>
+                        &nbsp;&nbsp;BUSCAR PRODUCTO
+                    </button>
+
+                    <app-input class="formControl" [formGroup]="sellForm" [control]="'barcode'"
+                        [labelInfo]="{title:' Código de barra',required:false,type:'text'}"></app-input>
+
+                    <app-input class="formControl" [formGroup]="sellForm" [control]="'productQuantity'"
+                        [labelInfo]="{title:'Cantidad del producto',required:false,type:'text'}"></app-input>
+
+
+                    <button class="btn" (click)="validateProduct(getProduct(),getQuantity(),'',
+                    checkProductExistence.bind(this),checkAdded.bind(this),
+                    checkEmptyExistence.bind(this),checkEnoughExistence.bind(this),
+                    addProduct.bind(this))" [ngClass]="{'enable':sellForm.get('barcode')?.valid}">
+                        <i class="far fa-check-circle"></i>
+                        &nbsp;&nbsp;VERIFICAR PRODUCTO
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="table-container">
+            <div class="table-title">
+                <h6>Productos añadidos a la venta</h6>
+            </div>
+            <div class="table-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Código de barra</th>
+                                <th>Producto</th>
+                                <th>Existentes</th>
+                                <th>Cantidad</th>
+                                <th>Precio de venta</th>
+                                <th>Descuento</th>
+                                <th>Valor de descuento</th>
+                                <th>Impuesto</th>
+                                <th>Sub total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let product of products; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{product.barcode}}</td>
+                                <td>{{product.name}}&nbsp;{{product.mark}}&nbsp;{{product.model}}&nbsp;</td>
+                                <td>{{product.exist_quantity}}</td>
+                                <td>
+                                    <input currencyMask class="input-table"
+                                        [(ngModel)]="sellProducts[i].quantity_products"
+                                        [options]="{ prefix: '',precision:0,align:'left' }">
+                                </td>
+                                <td>{{comunicatorSvc.converter(product.price,mainCurrency,selectedCurrency)|
+                                    currency:selectedCurrency}}</td>
+                                <td>{{product.discount|percent:'1.1-1'}}</td>
+                                <td>{{comunicatorSvc.converter(product.discount*product.price,mainCurrency,selectedCurrency)|
+                                    currency:selectedCurrency}}
+                                </td>
+                                <td>{{taxes[i].tax_name}} {{product.tax_rate|percent:'1.1-1'}} </td>
+                                <td> {{comunicatorSvc.converter(calculateSubtotal(i),
+                                    mainCurrency,selectedCurrency)|currency:selectedCurrency}}</td>
+                                <td class="icon" (click)="deleteProductOnSale(i)">
+                                    <i class="fa fa-trash-can delete"></i>
+                                </td>
+                            </tr>
+                            <tr *ngIf="products.length>0">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td>{{comunicatorSvc.converter(calculatePartialTotal(),mainCurrency,selectedCurrency)|
+                                    currency:selectedCurrency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-container">
+        <h3>DATOS DE LA VENTA</h3>
+        <div class="form" [formGroup]="sellForm">
+            <div class="form-group">
+                <div class="formControl">
+                    <label [ngStyle]="{'color':'#676d74','font-size':'1rem'}">
+                        Fecha
+                    </label>
+                    <p>{{date|date:'dd/MM/yyyy'}}</p>
+                </div>
+
+
+                <div class="formControl">
+                    <label [ngStyle]="{'color':'#676d74','font-size':'1rem'}">
+                        Caja
+                    </label>
+                    <p *ngIf="cashRegisterName">{{cashRegisterName}}</p>
+                </div>
+
+                <app-select class="formControl" [formGroup]="sellForm" [control]="'currency_code'"
+                    [selectInfo]="selectInfoCurrencies" [selectOptions]="currencies"></app-select>
+
+                <div class="client">
+                    <app-select class="formControl" [formGroup]="sellForm" [control]="'client'"
+                        [selectInfo]="selectInfoClients" [selectOptions]="clients"></app-select>
+                    <i class="fas fa-user-plus add" (click)="open(clientElement)"></i>
+                </div>
+                <p class="form-title"> Tipo de pago</p>
+                <div class="form-group">
+                    <label class="ratio-buttons">
+                        <input type="radio" formControlName="type_sell" value="Contado" checked>
+                        &nbsp;<i class="fas fa-money-bill-alt"></i>&nbsp;Contado
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="ratio-buttons">
+                        <input type="radio" formControlName="type_sell" value="Crédito">
+                        &nbsp;<i class="fab fa-cc-visa"></i>&nbsp;Crédito
+                    </label>
+                </div>
+                <div class="form-group">
+
+                    <app-input class="formControl" [formGroup]="sellForm" [control]="'discount'"
+                        [labelInfo]="{title:' Descuento (%)',required:false,type:'text'}"></app-input>
+                </div>
+            </div>
+        </div>
+        <div class="total" *ngIf="mainCurrency && selectedCurrency">
+            <p>sub Total</p>
+            <h4>+ {{comunicatorSvc.converter(calculatePartialTotal(),mainCurrency,selectedCurrency)|
+                currency:selectedCurrency}}</h4>
+        </div>
+        <div class="total" *ngFor="let tax of taxes">
+            <p *ngIf="tax.tax_rate>0">{{tax.tax_name}}</p>
+            <h4 *ngIf="tax.tax_rate>0"> +
+                {{comunicatorSvc.converter(calculateTaxAmount(tax.tax_rate),mainCurrency,selectedCurrency)
+                |currency:selectedCurrency}} </h4>
+        </div>
+        <div class="total" *ngIf="mainCurrency">
+            <p>Descuento</p>
+            <h4> -
+                {{comunicatorSvc.converter(calculateDiscountOnSale(),mainCurrency,selectedCurrency)|currency:selectedCurrency}}
+            </h4>
+        </div>
+        <div class="line"></div>
+        <div class="total" *ngIf="mainCurrency">
+            <p>Total</p>
+            <h4> {{comunicatorSvc.converter(calculateTotalAmount(),mainCurrency,selectedCurrency)|currency:selectedCurrency}} </h4>
+        </div>
+        <button title="{{validateSale().msj}}" class="form-button" [disabled]="!validateSale().isValid"
+            (click)="addPayment()" [ngClass]="{'btn-save':validateSale().isValid}">
+            <i class="far fa-save"></i>
+            &nbsp;&nbsp;GUARDAR VENTA
+        </button>
+    </div>
+</div>
+
+<dialog #client class="newClient">
+    <div class="header">
+        <h2 class="title">Agregar Cliente</h2>
+        <button class="btn-cerrar-dialog" (click)="closeModal(this.clientElement)">x</button>
+    </div>
+    <app-nuevo-cliente [isOpenModal]="clientElement?.nativeElement.open"
+        (messageEvent)="updateClientList($event,clientElement)"></app-nuevo-cliente>
+</dialog>

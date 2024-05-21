@@ -1,0 +1,9 @@
+<div class="dialog" #popup>
+    <i class='fa-regular fa-circle-check success'></i>
+    <h3 *ngIf="message">{{message.title}}</h3>
+    <p *ngIf="message">{{message.description}}</p>
+    <div>
+        <button class="form-button btn-save" (click)="cancel()">
+            &nbsp;&nbsp;ACEPTAR</button>
+    </div>
+</div>

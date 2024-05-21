@@ -1,0 +1,8 @@
+<div *ngIf="criterio===null">
+    <strong>Fecha: </strong>{{initialDate|date:'dd/MM/yyyy'}}  <strong>al</strong>  {{endDate|date:'dd/MM/yyyy'}}
+</div>
+<div *ngIf="criterio!==null">
+    <strong>Código de barra del producto:</strong> {{criterio}}
+</div>
+<app-table [tableInfo]="tableInfo" [dataSource]="kardex" [tableColumns]="tableColumns" 
+(actionEvent)="redirectToDetallesKardex($event)"></app-table>

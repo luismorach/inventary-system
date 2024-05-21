@@ -1,0 +1,162 @@
+.main-container {
+  display: flex;
+  width: 100%;
+  min-height: 75%;
+  background-color: white;
+  border: 1px solid #D8D8D8;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.left-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 20%;
+  padding: 0rem 2rem;
+  padding-top: 2rem;
+}
+
+.left-container p {
+  text-align: center;
+  font-size: 1rem;
+  margin: 0px;
+  color: #495057
+}
+
+.addBuy {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+.addBuy .form{
+  flex-grow: 1;
+}
+.formControl {
+  width: 20%;
+  min-width: 140px;
+  max-width: 500px;
+  
+}
+
+.formControl p{
+  margin-top: 1rem;
+  padding-bottom:.3rem;
+  font-size: 1rem;
+  border-bottom: 1px solid #D8D8D8;
+  color: #676d74;
+  width: 100%;
+}
+
+.btn {
+  all: unset;
+  min-width: 70px;
+  width: 15%;
+  padding: .8rem 1rem;
+  margin: 2.5rem 0rem;
+  border-radius: .3rem;
+  font-size: .8125rem;
+  text-align: center;
+  cursor: not-allowed;
+  outline: 0;
+  font-size: 1rem;
+  color: #676d74;
+}
+
+.enable {
+  color: #009688;
+  cursor: pointer;
+}
+
+.enable:hover {
+  background-color: #EBEBEB;
+}
+
+.right-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  padding-right: 2rem;
+  width: 30%;
+  margin: 1rem;
+}
+
+.right-container h3 {
+  width: 100%;
+  padding-bottom: .5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border-bottom: 2px solid #EBEBEB;
+}
+
+.right-container .formControl {
+  margin: 0rem 0rem;
+  min-width: 1%;
+  max-width: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.total {
+  width: 100%;
+
+}
+
+.form-button {
+  text-align: center;
+  margin-top:1rem;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cerrar-dialog {
+  all: unset;
+  padding: .1rem 1rem;
+  border-radius: .1rem;
+  background-color: transparent;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+  cursor: pointer;
+  color: black;
+  appearance: none;
+}
+.btn-cerrar-dialog:hover{
+  opacity: 1;
+}
+
+@media (max-width: 490px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .right-container {
+    width: auto;
+    margin: 1rem;
+  }
+  
+  .left-container .form .form-group button:first-child{
+   order:2
+  }
+  .left-container .form-group >.formControl{
+    order:1
+  }
+  .left-container .form .form-group button:last-child{
+    order:3
+   }
+ 
+}

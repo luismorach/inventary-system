@@ -1,0 +1,107 @@
+<div class="form-container">
+    <h3 class="form-title">
+        <i class="fa fa-barcode"></i>
+        &nbsp;Código de barra
+    </h3>
+    <div class="form" [formGroup]="formNewProduct">
+        <div class="form-group">
+            <app-input class="formControl" [formGroup]="formNewProduct" [control]="'barcode'"
+            [labelInfo]="{title:' Código de barra',required:true,type:'text'}"></app-input>
+
+        </div>
+        <h3 class="form-title">
+            <i class="fas fa-box fa-fw"></i>
+            &nbsp;Información del producto
+        </h3>
+        <div class="form-group">
+            <app-input class="formControl" [formGroup]="formNewProduct" [control]="'name'"
+            [labelInfo]="{title:'Nombre',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewProduct" [control]="'mark'"
+            [labelInfo]="{title:'Marca',required:false,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewProduct" [control]="'model'"
+            [labelInfo]="{title:'Modelo',required:false,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewProduct" [control]="'discount'"
+            [labelInfo]="{title:'Descuento del producto (%)',required:true,type:'text'}"></app-input>
+        </div>
+        <h3 class="form-title">
+            <i class="fas fa-calendar-alt"></i>
+            &nbsp;Vencimiento del producto
+        </h3>
+        <div class="form-group">
+            <label class="ratio-buttons">
+                <input formControlName="can_expir" type="radio"
+                    value="true" checked>
+                &nbsp;<i class="far fa-check-circle fa-fw"></i>&nbsp;Si Vence
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="ratio-buttons">
+                <input formControlName="can_expir" type="radio"
+                    value="false">
+                &nbsp;<i class="far fa-times-circle fa-fw"></i>&nbsp;No vence
+            </label>
+
+        </div>
+
+        <h3 class="form-title">
+            <i class="fas fa-history"></i>
+            &nbsp;Garantia de fábrica
+        </h3>
+        <div class="form-group">
+            
+            <app-select class="formControl" [formGroup]="formNewProduct" [control]="'garanty'"
+                [selectInfo]="selectInfoGaranty" [selectOptions]="selectOptionsGaranty"></app-select>
+
+            <ng-container *ngIf="this.formNewProduct.get('garanty')?.value==='Habilitada'">
+                <app-input class="formControl" [formGroup]="formNewProduct" [control]="'time_unit'"
+                [labelInfo]="{title:'Unidad de tiempo',required:true,type:'text'}"></app-input>
+            </ng-container>
+
+            <ng-container *ngIf="this.formNewProduct.get('garanty')?.value==='Habilitada'">
+                <app-select class="formControl" [formGroup]="formNewProduct" [control]="'time_garanty'"
+                [selectInfo]="selectInfoGaranty" [selectOptions]="selectOptionsTimeGaranty"></app-select>
+            </ng-container>
+            
+        </div>
+        <h3 class="form-title">
+            <i class="fas fa-truck-loading"></i>
+            Categoría & impuesto
+        </h3>
+        <div class="form-group">
+            <app-select class="formControl" [formGroup]="formNewProduct" [control]="'id_category'"
+            [selectInfo]="selectInfoCategories" [selectOptions]="categories"></app-select>
+ 
+            <app-select class="formControl" [formGroup]="formNewProduct" [control]="'tax_id'"
+                [selectInfo]="selectInfoTaxes" [selectOptions]="taxes"></app-select>
+     
+       </div>
+        <div class="form-actions">
+            <ng-container *ngIf="!productToUpdate">
+                <div>
+                    <button class="form-button" [disabled]="formNewProduct.invalid"
+                        [ngClass]="{'btn-save':formNewProduct.valid}" (click)="showModalWarning('Los datos serán ingresados al sistema 
+                            ¿desea continuar?');this.type='create'">
+                        <i class="far fa-save"></i> &nbsp;&nbsp;ACEPTAR
+                    </button>
+                    <button class="form-button btn-clean" (click)="clearFormFields()">
+                        <i class="fas fa-paint-roller"></i> &nbsp;&nbsp;LIMPIAR
+                    </button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="productToUpdate">
+                <div>
+                    <button title="{{validateUpdate().message}}" class="form-button"
+                        [disabled]="!validateUpdate().isValid" [ngClass]="{'btn-update':validateUpdate().isValid}"
+                        (click)="showModalWarning('Los datos serán ingresados al sistema 
+                        ¿desea continuar?');this.type='update'">
+                        <i class="fa fa-arrows-rotate"></i>&nbsp;&nbsp;ACTUALIZAR</button>
+                </div>
+            </ng-container>
+        </div>
+        <p class="form-info">Los campos marcados con <i class="fab fa-font-awesome-alt"></i>
+            son obligatorios</p>
+    </div>
+</div>

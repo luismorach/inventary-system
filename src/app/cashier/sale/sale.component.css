@@ -1,0 +1,179 @@
+
+.main-container {
+    flex-grow: 1;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: 1px solid #D8D8D8;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 20%;
+    width: 80%;
+    padding: 0rem 2rem;
+    padding-top: 2rem;
+}
+
+.left-container p {
+    text-align: center;
+    font-size: 1rem;
+    margin: 0px;
+    color: #495057
+}
+
+.addSell {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.addSell .form {
+    flex-grow: 1;
+}
+
+.form-group {
+    flex-wrap: wrap;
+
+}
+
+
+.formControl {
+    width: 20%;
+    min-width: 140px;
+    max-width: 500px;
+    margin:0rem 1rem;
+  }
+
+.enable {
+    color: #009688;
+    cursor: pointer;
+}
+
+.enable:hover {
+    background-color: #EBEBEB;
+} 
+
+.right-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1rem 1rem 1rem;
+    width: 20%;
+    border-left: 1px solid #EBEBEB;
+}
+
+.right-container h3 {
+    width: 100%;
+    padding-bottom: .5rem;
+    text-align: center;
+
+}
+
+.right-container .formControl {
+    margin: 1rem 0rem;
+    min-width: 1%;
+    max-width: 100%;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.add {
+    color: #03a9f4;
+    margin-left: 1rem;
+    padding: .8rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    margin-top: 2.5rem;
+}
+
+.add:hover {
+    background-color: #EBEBEB;
+}
+
+.total {
+    width: 100%;
+    padding-left: 2rem;
+    margin: .5rem;
+}
+
+.line {
+    width: 100%;
+    border-bottom: 1px solid #EBEBEB;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.form-button {
+    text-align: center;
+}
+
+.list-product {
+    width: 60%;
+    height: 100%;
+    border: none;
+}
+
+.list-product::backdrop {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+
+.aceptar {
+    color: #03a9f4
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub-header {
+    display: flex;
+    justify-content: space-around;
+}
+
+.icon-add-product i {
+    color: #009688
+}
+
+.modal {
+    border: none;
+    width: 80%;
+}
+
+.client{
+    width:100%;
+    display:flex;
+    align-items: center;
+    margin:0;
+    padding: 0;
+}
+.modal::backdrop {
+    background-color: rgba(0, 0, 0, .5);
+}
+@media (max-width: 1200px) {
+    .list-product{
+        width: 80%;
+    }
+}
+@media (max-width: 600px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .left-container{
+        width: auto;
+    }
+    .right-container {
+        width: auto;
+        margin: 1rem;
+        border: none;
+      }
+}

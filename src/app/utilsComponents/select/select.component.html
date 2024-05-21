@@ -1,0 +1,18 @@
+<div [formGroup]="formGroup" class="form-control">
+    <label class="form-label" [ngClass]="{'label-on-focus-up': elementHasFocus[1]}"
+        [ngStyle]="animationLabel(formGroup,'select')">
+        {{selectInfo.label}}
+        <ng-container *ngIf="selectInfo.required">
+            <i class="fab fa-font-awesome-alt"></i>
+        </ng-container>
+    </label>
+    <select formControlName="{{control}}" class="form-input" (focus)="isFocused(1,formGroup,control)"
+        (focusout)="isFocused(1,formGroup,control)">
+        <option *ngFor="let option of selectOptions;let i=index" value="{{option[selectInfo.definitionOption]}}"
+            [disabled]="i===0">
+            <ng-container *ngFor="let optionName of selectInfo.optionName">
+                {{option[optionName]}}
+            </ng-container>
+        </option>
+    </select>
+</div>

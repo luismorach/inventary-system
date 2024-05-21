@@ -1,0 +1,114 @@
+<div class="table-container">
+    <div class="table-title">
+        <h6>{{tableInfo.tableTitle}}</h6>
+    </div>
+    <div class="table-body">
+        <ng-container *ngIf="tableInfo.enablePagination && dataSource.length>0">
+            <div class="search-pagination" [formGroup]="tableSearch">
+                <div class="dataTable-length">
+                    <label>Mostrar
+                        <select name="dataTable_length" formControlName="numberRows" class="custom-select"
+                            (change)="createPages(tableSearch,currentData,dataSource)">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select> entradas</label>
+                </div>
+                <ng-container *ngIf="tableInfo.enableSearch">
+                    <div class="dataTable-filter">
+                        <label>Buscar:
+                            <input formControlName="search" class="input-search dataTable-filter"
+                                (keyup)="createPages(tableSearch,currentData,dataSource)">
+                        </label>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <ng-container *ngIf="tableInfo.header">
+                        <tr>
+                            <th *ngFor="let header of tableInfo.header" [rowSpan]="header.rowSpan"
+                                [colSpan]="header.colSpan" style="text-align:center">
+                                {{header.label}}
+                            </th>
+                        </tr>
+                    </ng-container>
+                    <tr>
+                        <th> N° </th>
+                        <ng-container *ngFor="let column of tableColumns">
+                            <th *ngIf="column.columnType!=='kardex_detail'">
+                                {{column.columnLabel}}
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+
+                <tbody #rows>
+                    <ng-container *ngIf="dataSource.length>0; else Empty">
+
+                        <tr *ngFor="let data of dataSource| 
+                    tableFilter:getValuesToPipe(tableSearch);let i=index">
+                            <td>{{i+1}}</td>
+                            <ng-container *ngFor="let column of tableColumns;let columnIndex=index">
+                                <ng-container *ngIf="column.columnLabel!==''">
+                                    <td>
+                                        <ng-container *ngFor="let definition of column.definition">
+                                            <span [ngClass]=getClass(data,definition)>
+                                                {{data[definition] | dinamicPipe:column.pipeType:
+                                                getParametersToPipe(data,column)}}
+                                            </span>
+                                        </ng-container>
+                                    </td>
+
+                                </ng-container>
+                                <ng-container *ngIf="column.columnLabel===''">
+                                    <td class="icon" (click)="actionEvent.emit(
+                                        {responseType:column.columnType,value:data,index:i});elementToRemove=data">
+                                        <i class="{{getIcon(column,i)}}"></i>
+                                    </td>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                        <tr>
+                            <td *ngFor="let foot of footer;let i=index">
+                                {{foot}}
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-template #Empty>
+                        <tr style="text-align: center; font-weight: bolder">
+                            <td [colSpan]="tableColumns.length+1">NO HAY {{tableInfo.tableTitle | uppercase}}</td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+
+        <ng-container *ngIf="tableInfo.enablePagination && dataSource.length>0">
+            <div class="search-pagination">
+                <div class="dataTables_info" #dataTables_info>
+                </div>
+                <div class="pagination-responsive">
+                    <ul class="pagination" #pagination>
+                        <li class="previous page-item dataTables_info items"
+                            [class.disable]="getValuesToPipe(tableSearch).indexCurrentPage===0"
+                            [class.active]="getValuesToPipe(tableSearch).indexCurrentPage!=0"
+                            (click)="previousPage(tableSearch,currentData,dataSource)">
+                            Previous
+                        </li>
+
+                        <li class="next dataTables_info active items" #next
+                            [class.disable]="getValuesToPipe(tableSearch).indexCurrentPage===numberPages-1"
+                            (click)="nextPage(tableSearch,currentData,dataSource)">
+                            Next
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

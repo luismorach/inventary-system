@@ -1,0 +1,35 @@
+.back button{
+    height:15px;
+    width:100px;
+    font-family: 'Roboto';
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .back button i{
+   margin: 0px;
+   font-size: 1.2rem;
+  }
+.datos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 0;
+}
+.datos div{
+    width: 100%;
+    margin: 1rem;
+}
+.datos div h3{
+    color:white;
+    padding: .3rem;
+    background-color: #424242;
+    text-align: center;
+}
+.back{
+    display: flex;
+    justify-content: right;
+}
+.form-title{
+    text-align: center;
+}

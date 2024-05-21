@@ -1,0 +1,16 @@
+<div class="scroll info-container container">
+    <h2 class="title">
+        <i class={{title[0]}}></i>
+        &nbsp;{{title[1]}}
+    </h2>
+    <p class="msj">En el módulo COMPRAS usted podrá registrar compras de productos ya sean nuevos o ya 
+        registrados en el sistema.Tambien puede ver la lista de todas las compras realizadas, buscar 
+        compras y ver información mas detallada de cada compra
+    </p>
+    
+    <router-outlet></router-outlet>      
+</div>
+<dialog  #listProducts class="list-product">
+    <app-list-products [message]="msjListProducts" 
+      (messageEvent)="receiveMessageListProducts($event)"></app-list-products>
+  </dialog>

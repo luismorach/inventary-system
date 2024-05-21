@@ -1,0 +1,15 @@
+.dialog{
+    width: 100%;
+}
+.btn-save,.btn-cancel{
+    margin-top:0px;
+  }
+  button{
+    font-family: 'Roboto';
+    font-weight: bold;
+    text-align: center;
+ }
+ button i{
+    margin: 0px;
+    font-size: 1.2rem;
+ }

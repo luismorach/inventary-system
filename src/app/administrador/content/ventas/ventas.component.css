@@ -1,0 +1,31 @@
+
+.pay {
+    width: 50%;
+    border: none;
+  }
+  
+  .pay::backdrop {
+    background-color: rgba(0, 0, 0, .5);
+  }
+  .list-product {
+    width: 60%;
+    height: 100%;
+    border: none;
+  }
+  
+  .list-product::backdrop {
+    background-color: rgba(0, 0, 0, .5);
+  }
+
+  @media (max-width: 490px) {
+
+    .pay{
+      width:90%
+    }
+  }  
+  @media (max-width: 1200px) {
+
+    .list-product{
+      width:80%
+    }
+  }  

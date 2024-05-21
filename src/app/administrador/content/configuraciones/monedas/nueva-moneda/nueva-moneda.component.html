@@ -1,0 +1,51 @@
+<div class="form-container">
+    <h3 class="form-title">
+        <i class="far fa-address-card"></i>
+        &nbsp;Información de la moneda
+    </h3>
+    <div class="form" [formGroup]="newCoin">
+        <div class="form-group">
+            <app-input class="formControl" [formGroup]="newCoin" [control]="'country'"
+            [labelInfo]="{title:'País',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="newCoin" [control]="'country_code'"
+            [labelInfo]="{title:'Código del país',required:false,type:'text'}" ></app-input>
+
+            <app-input class="formControl" [formGroup]="newCoin" [control]="'language'"
+            [labelInfo]="{title:'ídioma',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="newCoin" [control]="'language_code'"
+            [labelInfo]="{title:'Código del ídioma',required:false,type:'text'}" ></app-input>
+
+            <app-input class="formControl" [formGroup]="newCoin" [control]="'currency'"
+            [labelInfo]="{title:'Divisa',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="newCoin" [control]="'currency_code'"
+            [labelInfo]="{title:'Código de la divisa',required:false,type:'text'}" ></app-input>
+          
+        </div>
+        <div class="form-actions">
+            <div *ngIf="!coinToUpdate">
+                <button class="form-button" id="btn-success" [disabled]="newCoin.invalid"
+                [ngClass]="{'btn-save':newCoin.valid}"
+                   (click)="showModalWarning('Los datos serán ingresados al sistema ¿desea continuar?');
+                   this.type='create'">
+                    <i class="far fa-save"></i>
+                    &nbsp;&nbsp;ACEPTAR</button>
+                <button class="form-button btn-clean" id="btn-clean" (click)="clean()">
+                    <i class="fas fa-paint-roller"></i>
+                    &nbsp;&nbsp;LIMPIAR</button>
+            </div>
+            <div *ngIf="coinToUpdate">
+                <button title="{{validateUpdate().msj}}" class="form-button" [disabled]="!validateUpdate().isValid"
+                [ngClass]="{'btn-update':validateUpdate().isValid}" 
+               (click)="showModalWarning('Los datos serán ingresados al sistema ¿desea continuar?');this.type='update'">
+                    <i class="fa fa-arrows-rotate"></i>
+                    &nbsp;&nbsp;ACTUALIZAR</button>
+            </div>
+        </div>
+        <p class="form-info">Los campos marcados con <i class="fab fa-font-awesome-alt"></i>
+            son obligatorios</p>
+        
+    </div>
+</div>

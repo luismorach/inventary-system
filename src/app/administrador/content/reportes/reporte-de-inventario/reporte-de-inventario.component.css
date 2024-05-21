@@ -1,0 +1,25 @@
+.form-title{
+    text-align: center;
+}
+.line{
+    border-bottom: 1px solid #D8D8D8;
+}
+.btn {
+    all: unset;
+    min-width: 70px;
+    padding: .8rem 1rem;
+    margin: 2rem;
+    border-radius: .3rem;
+    font-size: .8125rem;
+    text-align: center;
+    cursor: not-allowed;
+    outline: 0;
+    font-size: 1rem;
+    color: #676d74;
+    border:1px solid #676d74
+  }
+  .enable{
+    color: #03a9f4;
+    border:1px solid #03a9f4;
+    cursor: pointer;
+  }

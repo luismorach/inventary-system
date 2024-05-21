@@ -1,0 +1,30 @@
+.list-product {
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-cerrar-dialog {
+    all: unset;
+    padding: .1rem 1rem;
+    border-radius: .1rem;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor: pointer;
+    color: black;
+    appearance: none;
+}
+
+.icon-add-product i {
+    color: #009688
+}
+
+.btn-cerrar-dialog:hover {
+    opacity: 1;
+}

@@ -1,0 +1,110 @@
+<h3 class="report-title">Estadísticas de venta hoy ({{date|date:'dd/MM/yyyy'}})</h3>
+<div class="table-body">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Caja</th>
+                    <th>Vendedor</th>
+                    <th>Ventas realizadas</th>
+                    <th>Total en ventas</th>
+                    <th>Costo de venta</th>
+                    <th>Ganancias</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <ng-container *ngIf="reportes.length>0;else empty">
+                    <tr *ngFor="let reporte of reportes">
+                        <td>{{reporte.name_register}}</td>
+                        <td>{{reporte.names_user}} {{reporte.last_names_user}}</td>
+                        <td>{{reporte.sells}}</td>
+                        <td *ngIf="mainCurrency">{{reporte.total_sell|currency:mainCurrency}}</td>
+                        <td *ngIf="mainCurrency">{{reporte.costos|currency:mainCurrency}}</td>
+                        <td *ngIf="mainCurrency">{{reporte.total_sell-reporte.costos|currency:mainCurrency}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="table-body">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Total ventas realizadas</th>
+                    <th>Total en ventas</th>
+                    <th>Total costos de venta</th>
+                    <th>Total ganancias</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <ng-container *ngIf="reportes.length>0 && mainCurrency; else empty">
+                    <tr>
+                        <td>{{calculateTotals(reportes).sells}}</td>
+                        <td>{{calculateTotals(reportes).total_sell|currency:mainCurrency}}</td>
+                        <td>{{calculateTotals(reportes).total_costos|currency:mainCurrency}}</td>
+                        <td>{{calculateTotals(reportes).ganancias|currency:mainCurrency}}</td>
+                    </tr>
+                </ng-container>
+                <ng-template #empty>
+                    <tr>
+                        <td colspan="7">No hay ventas realizadas el dia de hoy</td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="table-body">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Moneda</th>
+                    <th>Total en transacciones eléctronicas</th>
+                    <th>Total en efectivo</th>
+                </tr>
+            </thead>
+
+            <tbody *ngIf="currencies">
+                <tr *ngFor="let reportePago of reportesPagos; let i=index">
+                    <td>{{reportePago.currency}} {{reportePago.currency_code}}</td>
+                    <td>{{reportePago.transaccion |currency:currencies[i]}}</td>
+                    <td>{{reportePago.efectivo|currency:currencies[i]}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-actions">
+    <button class="form-button btn" (click)="createPDF('reporte de hoy')" [disabled]="!(reportes.length>0)"
+        [ngClass]="{'enable':reportes.length>0}">
+        <i class="fas fa-print"></i>&nbsp;&nbsp;IMPRIMIR</button>
+
+</div>
+<div class="line"></div>
+<div class="form-container">
+    <h3 class="form-title">
+        &nbsp;Generar reporte por fecha
+    </h3>
+    <div class="form" [formGroup]="formGenerateReport">
+        <div class="form-group">
+            <app-input class="formControl" [formGroup]="formGenerateReport" [control]="'initialDate'"
+                [labelInfo]="{title:'Fecha de inicio',required:true,type:'date'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formGenerateReport" [control]="'endDate'"
+                [labelInfo]="{title:'Fecha de fin',required:true,type:'date'}"></app-input>
+        </div>
+        <div class="form-actions">
+            <button class="form-button btn" title="{{checkDates().msj}}" [disabled]="!checkDates().isValid"
+                (click)="getReportsByDate()" [ngClass]="{'enable':checkDates().isValid}">
+                <i class="far fa-save"></i>
+                &nbsp;&nbsp;GENERAR REPORTE</button>
+        </div>
+    </div>
+</div>

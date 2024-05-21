@@ -1,0 +1,61 @@
+<div class="form-container">
+    <h3 class="form-title">
+        <i class="far fa-address-card"></i>
+        &nbsp;Datos del proveedor
+    </h3>
+    <div class="form" [formGroup]="formNewProvider">
+        <div class="form-group">
+            <app-select class="formControl" [formGroup]="formNewProvider" [control]="'document_type'"
+            [selectInfo]="selectInfo" [selectOptions]="selectOptions"></app-select>
+
+            <app-input class="formControl" [formGroup]="formNewProvider" [control]="'document_number'"
+                [labelInfo]="{title:'Número de documento',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewProvider" [control]="'name_provider'"
+                [labelInfo]="{title:'Nombre',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewProvider" [control]="'address_provider'"
+                [labelInfo]="{title:' Dirección',required:false,type:'text'}"></app-input>
+        </div>
+        <h3 class="form-title">
+            <i class="fas fa-phone-volume"></i>
+            &nbsp;Información de contacto
+        </h3>
+        <div class="form-group">
+
+            <app-input class="formControl" [formGroup]="formNewProvider" [control]="'name_boss'"
+                [labelInfo]="{title:'Nombre del encargado',required:false,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewProvider" [control]="'phone_number'"
+                [labelInfo]="{title:'Télefono',required:false,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewProvider" [control]="'email'"
+                [labelInfo]="{title:'Email',required:false,type:'text'}"></app-input>
+        </div>
+        <div class="form-actions">
+            <ng-container *ngIf="!providerToUpdate">
+                <div>
+                    <button class="form-button" [disabled]="formNewProvider.invalid"
+                        [ngClass]="{'btn-save':formNewProvider.valid}" (click)="showModalWarning('Los datos serán ingresados al sistema 
+                            ¿desea continuar?');this.type='create'">
+                        <i class="far fa-save"></i> &nbsp;&nbsp;ACEPTAR
+                    </button>
+                    <button class="form-button btn-clean" (click)="clearFormFields()">
+                        <i class="fas fa-paint-roller"></i> &nbsp;&nbsp;LIMPIAR
+                    </button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="providerToUpdate">
+                <div>
+                    <button title="{{validateUpdate().message}}" class="form-button"
+                        [disabled]="!validateUpdate().isValid" [ngClass]="{'btn-update':validateUpdate().isValid}"
+                        (click)="showModalWarning('Los datos serán ingresados al sistema 
+                        ¿desea continuar?');this.type='update'">
+                        <i class="fa fa-arrows-rotate"></i>&nbsp;&nbsp;ACTUALIZAR</button>
+                </div>
+            </ng-container>
+        </div>
+        <p class="form-info">Los campos marcados con <i class="fab fa-font-awesome-alt"></i>
+            son obligatorios</p>
+    </div>
+</div>

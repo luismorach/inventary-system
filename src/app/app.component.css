@@ -1,0 +1,21 @@
+.quantity {
+  width: 30%;
+  border: none;
+}
+
+@media (max-width: 1100px) {
+  .quantity{
+    width:40%
+  }
+} 
+@media (max-width: 700px) {
+  .quantity{
+    width:70%
+  }
+} 
+@media (max-width: 500px) {
+  .quantity{
+    width:90%
+  }
+} 
+

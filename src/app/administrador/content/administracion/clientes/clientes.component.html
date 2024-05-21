@@ -1,0 +1,37 @@
+<div class="scroll info-container container">
+    <h2 class="title">
+        <i class="{{title[0]}}">
+        </i> &nbsp;{{title[1]}}
+    </h2>
+    <p class="msj">En el módulo CLIENTE podrá registrar en el 
+        sistema los datos de sus clientes mas frecuentes, para 
+        realizar ventas, además podra realizar busquedas de 
+        los mismos, actualizar sus datos o eliminarlos 
+        si asi lo desea
+    </p>
+    <ul class="list-options">
+        <li (click)="setOptions(true,false)" 
+        [ngClass]="selectedClass(option1)">
+            <a routerLink="nuevo cliente" 
+            [class.active]="option1" class="option-component">
+                <div class="container">
+                    <i class="fa fa-child fa-fw"></i>
+                    &nbsp;&nbsp;NUEVO CLIENTE
+                </div>
+            </a>
+            
+        </li>
+        <li (click)="setOptions(false,true)" 
+        [ngClass]="selectedClass(option2)">
+            <a routerLink="lista clientes" 
+            [class.active]="option2" class="option-component">
+                <div class="container">
+                    <i class="fas fa-clipboard-list fa-fw"></i>
+                    &nbsp;&nbsp;LISTA DE CLIENTES
+                </div>
+            </a>
+        </li>
+
+    </ul>
+    <router-outlet></router-outlet>
+</div>

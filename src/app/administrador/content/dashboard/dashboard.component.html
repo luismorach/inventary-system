@@ -1,0 +1,74 @@
+<div class="scroll main-container">
+    <div class="container">
+        <h2 class="title">
+            <i class="fa-brands fa-dashcube fa-fw">
+            </i> &nbsp;DASHBOARD
+        </h2>
+        <p class="msj">¡Bienvenido/a {{names_user}}! este es el panel principal del sistema
+            acá podrá encontrar atajos para acceder a los distintos listados de
+            cada módulo del sistema
+        </p>
+    </div>
+    <div class="body-container">
+       
+        <div class="options">
+    
+            <a routerLink="/administrador/administracion/cajas/lista cajas" class="card">
+                <div class="title-option-dashboard"> CAJAS REGISTRADAS</div>
+                <div class="info" >{{dashboard.registers}}</div>
+                <i class="fa fa-cash-register"></i>
+            </a>
+            <a routerLink="/administrador/administracion/categorías/lista categorías" class="card">
+                <div class="title-option-dashboard"> CATEGORÍAS REGISTRADAS</div>
+                <div class="info">{{dashboard.categories}}</div>
+                <i class="fa fa-tags fa-fw"></i>
+            </a>
+    
+            <a routerLink="/administrador/administracion/proveedores/lista proveedores" class="card">
+                <div class="title-option-dashboard"> PROVEEDORES REGISTRADOS</div>
+                <div class="info">{{dashboard.providers}}</div>
+                <i class="fa fa-shipping-fast fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/administracion/usuarios/lista usuarios" class="card">
+                <div class="title-option-dashboard"> USUARIOS REGISTRADOS</div>
+                <div class="info">{{dashboard.users}}</div>
+                <i class="fa fa-user-tie fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/administracion/clientes/lista clientes" class="card">
+                <div class="title-option-dashboard"> CLIENTES REGISTRADOS</div>
+                <div class="info">{{dashboard.clients}}</div>
+                <i class="fa fa-child fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/productos/productos en almacen" class="card">
+                <div class="title-option-dashboard"> PRODUCTOS REGISTRADOS</div>
+                <div class="info">{{dashboard.products}}</div>
+                <i class="fa fa-box fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/compras/compras realizadas" class="card">
+                <div class="title-option-dashboard"> COMPRAS REGISTRADAS</div>
+                <div class="info">{{dashboard.buys}}</div>
+                <i class="fas fa-shopping-basket fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/ventas/ventas realizadas" class="card">
+                <div class="title-option-dashboard"> VENTAS REGISTRADAS</div>
+                <div class="info">{{dashboard.sells}}</div>
+                <i class="fas fa-hand-holding-usd fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/devoluciones/devoluciones realizadas" class="card">
+                <div class="title-option-dashboard"> DEVOLUCIONES REGISTRADAS</div>
+                <div class="info">{{dashboard.repayments}}</div>
+                <i class="fas fa-truck-loading fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/kardex/kardex general" class="card">
+                <div class="title-option-dashboard">TODOS MIS MOVIMIENTOS</div>
+                <div class="info">{{dashboard.kardex}}</div>
+                <i class="fas fa-warehouse fa-fw"></i>
+            </a>
+            <a routerLink="/administrador/reportes/reportes de inventario" class="card">
+                <div class="title-option-dashboard"> EMITIR REPORTES</div>
+                <div class="info">PDF</div>
+                <i class="far fa-file-pdf fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<div class=" list-product" #searchProducts>
+    <div class="container">
+        <div class="header">
+            <h2 class="title">Agregar Productos</h2>
+            <button class="btn-cerrar-dialog" (click)="cancel()">x</button>
+        </div>
+        <div class="scroll  table-container">
+            <div class="table-title">
+                <h6>lista de productos</h6>
+
+            </div>
+            <div class="table-body">
+                <div *ngIf="message"  class="search-pagination" [formGroup]="tableSearch">
+                    <div *ngIf="message.actionType==='venta'" class="dataTable-filter">
+                        <label>
+                            seleccione la moneda
+                        </label>
+                        <select formControlName="currency" class="input-search dataTable-filter">
+                            <option *ngFor="let currency of currencies"
+                                (click)="currencySelectedProducts=currency" value="{{currency.currency_code}}">
+                                {{currency.currency}}</option>
+                        </select>
+
+                    </div>
+                    <div class="search-pagination" >
+                        <div class="dataTable-filter">
+                            <label>Buscar:
+                                <input formControlName="search" class="input-search dataTable-filter">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>código de barra</th>
+                                <th>producto</th>
+                                <th>Existentes</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody #rows *ngIf="message">
+                            <tr *ngFor="let product of message.productsList| 
+                            tableFilter:{search: tableSearch.get('search')?.value,pagination:false,
+                        campSearch:tableSearch.get('campSearch')?.value};let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{product.barcode}}</td>
+                                <td>{{product.name}} {{product.mark}} {{product.model}}</td>
+                                <td>{{product.exist_quantity}}</td>
+                                <td *ngIf="message.actionType==='compra'"class="icon icon-add-product"
+                                 (click)="checkProduct(product,checkAdded.bind(this),addQuantity.bind(this))">
+                                    <i class="fas fa-plus-circle"></i>
+                                </td>
+                                <td *ngIf="message.actionType==='venta'">{{comunicatorSvc.converter(product.price,mainCurrency,currencySelectedProducts)
+                                    |currency: currencySelectedProducts}}</td>
+                                <td *ngIf="message.actionType==='venta'"class="icon icon-add-product" (click)="checkProduct(product,
+                                checkAdded.bind(this),checkEmptyExistence.bind(this),
+                                addQuantity.bind(this))">
+                                    <i class="fas fa-plus-circle"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="search-pagination">
+                    <div class="dataTables_info" #dataTables_info>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

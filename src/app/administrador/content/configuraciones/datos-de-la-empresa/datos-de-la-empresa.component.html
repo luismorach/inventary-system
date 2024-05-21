@@ -1,0 +1,119 @@
+<div class="scroll info-container container">
+    <h2 class="title">
+        <i class="fas fa-store-alt fa-fw"></i>
+        &nbsp;DATOS DE LA EMPRESA
+    </h2>
+    <p class="msj">En el módulo EMPRESA usted podrá registrar los datos de su compañia, negocio u
+        organización. Una vez registrados los datos de su empesa solo podrá actualizarlos en caso
+        que quiera cambiar algún dato, ya no será necesario registralos nuevamente
+    </p>
+    <div class="form-container">
+        <h3 class="form-title">
+            <i class="far fa-address-card"></i>
+            &nbsp;Datos de la empresa 
+        </h3>
+        <div class="form" [formGroup]="formBuilding">
+            <div class="form-group">
+                <app-select class="formControl" [formGroup]="formBuilding" [control]="'document_type'"
+                [selectInfo]="selectInfoDocument" [selectOptions]="selectOptionsDocument"></app-select>
+    
+                <app-input class="formControl" [formGroup]="formBuilding" [control]="'document_number'"
+                    [labelInfo]="{title:'Número de documento',required:true,type:'text'}"></app-input>
+    
+                <app-input class="formControl" [formGroup]="formBuilding" [control]="'name'"
+                    [labelInfo]="{title:'Nombre',required:true,type:'text'}"></app-input>
+    
+                <app-input class="formControl" [formGroup]="formBuilding" [control]="'address'"
+                    [labelInfo]="{title:'Dirección',required:false,type:'text'}"></app-input>
+                
+            </div>
+            <h3 class="form-title">
+                <i class="fas fa-user-friends"></i>
+                &nbsp;Información de contacto
+            </h3>
+            <div class="form-group">
+                <app-input class="formControl" [formGroup]="formBuilding" [control]="'phone_number'"
+                [labelInfo]="{title:'Télefono',required:false,type:'text'}"></app-input>
+
+                <app-input class="formControl" [formGroup]="formBuilding" [control]="'email'"
+                [labelInfo]="{title:'Email',required:false,type:'text'}" ></app-input>
+
+                <app-input class="formControl" [formGroup]="formBuilding" [control]="'email_password'"
+                [labelInfo]="{title:'Contraseña del email',required:false,type:'password'}" ></app-input>
+              
+            </div>
+
+            <div class="form-group">
+                <app-select class="formControl" [formGroup]="formBuilding" [control]="'currency_code'"
+                [selectInfo]="selectInfoCurrencies" [selectOptions]="allCurrencies"></app-select>
+    
+                <app-select class="formControl" [formGroup]="formBuilding" [control]="'secondary_currency'"
+                [selectInfo]="selectInfoSecondariesCurrencies" [selectOptions]="allCurrencies"></app-select>
+    
+                <i class="fas fa-circle-plus add"[ngClass]="{'add-active':secondaryCoin}" (click)="addSecondaryCoin()"></i>
+                
+            </div>
+            
+        </div>
+        <div class="table-container">
+            <div class="table-title">
+                <h6>Monedas secundarias añadidas</h6>
+            </div>
+            <div class="table-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Código de la moneda</th>
+                                <th>Moneda</th>
+                                <th>Tasa de cambio</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody #rows >
+                            <tr *ngFor="let coin of secondariesCoins;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{coin.currency_code}}</td>
+                                <td>{{coin.currency}}</td>
+                                <td>
+                                    <input currencyMask class="input-table" *ngIf="mainCoin!==undefined"
+                                    [(ngModel)]="coin.exchange"
+                                    [options]="this.comunicatorSvc.getAtributes(mainCoin)">
+                                </td>
+                                <td class="icon"(click)="deleteSecondaryCoin(coin)">
+                                    <i class="fa fa-trash-can delete"></i></td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        <div class="form-actions">
+            <div *ngIf="!building">
+                <button class="form-button" id="btn-success" (click)="submit()"
+                [ngClass]="{'btn-save':formBuilding.valid}">
+                    <i class="far fa-save"></i>
+                    &nbsp;&nbsp;ACEPTAR</button>
+                <button class="form-button btn-clean" id="btn-clean" (click)="clean()">
+                    <i class="fas fa-paint-roller"></i>
+                    &nbsp;&nbsp;LIMPIAR</button>
+            </div>
+            <div *ngIf="building">
+                <button title="{{validateUpdate().msj}}" class="form-button" 
+                (click)="showModalWarning('Los datos serán ingresados al sistema ¿desea continuar?',
+                validateUpdate().isValid);this.type='update'"
+                [ngClass]="{'btn-update':validateUpdate().isValid}">
+                    <i class="fa fa-arrows-rotate"></i>
+                    &nbsp;&nbsp;ACTUALIZAR</button>
+            </div>
+        </div>
+        <p class="form-info">Los campos marcados con <i class="fab fa-font-awesome-alt"></i> 
+            son obligatorios</p>
+       
+    </div>
+    
+</div>

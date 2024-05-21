@@ -1,0 +1,24 @@
+.nav-top{
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    box-sizing: border-box;
+
+}
+
+.nav-top div{
+    justify-content: space-between;
+}
+i{
+    height:100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+i:hover{
+    background-image:radial-gradient(rgba(250, 250, 250, 0.15),
+     rgba(100, 100, 100, 0.08),
+     rgba(0, 0, 0, 0.1));
+}

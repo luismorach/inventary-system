@@ -1,0 +1,11 @@
+<div class="nav-top">
+    <div>
+        <i class="fa fa-bars" (click)="showHideNavBar()"></i>
+    </div>
+    <div>
+        <i class="fa fa-user-cog" [routerLink]="['administracion','usuarios','actualizar cuenta',id_user]" 
+         routerLinkActive="activeLink"></i>
+        <i class="fa fa-power-off" style="color:red" (click)="close()"></i>
+    </div>
+</div>
+

@@ -1,0 +1,71 @@
+.form-button {
+    margin-top: 1rem;
+}
+
+.formControl{
+    flex-grow: 1;
+    width: 92%;
+    margin:0rem 1rem;
+}
+.btn {
+    all: unset;
+    min-width: 70px;
+    padding: .8rem 1rem;
+    margin: 0rem 0rem;
+    margin-top: 1rem;
+    border-radius: .3rem;
+    font-size: .8125rem;
+    text-align: center;
+    cursor: not-allowed;
+    outline: 0;
+    font-size: 1rem;
+    color: #676d74;
+}
+
+.aceptar {
+    color: #03a9f4
+}
+
+.enable {
+    cursor: pointer;
+}
+
+.enable:hover {
+    background-color: #EBEBEB;
+}
+
+.quantity {
+    width: 100%;
+    border: none;
+}
+
+.quantity::backdrop {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.quantity .form .form-control {
+    width: 95%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-cerrar-dialog {
+    all: unset;
+    padding: .1rem 1rem;
+    border-radius: .1rem;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor: pointer;
+    color: black;
+    appearance: none;
+}
+
+.btn-cerrar-dialog:hover {
+    opacity: 1;
+}

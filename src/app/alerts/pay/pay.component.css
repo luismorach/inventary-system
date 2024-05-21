@@ -1,0 +1,88 @@
+.pay {
+  width: 100%;
+  border: none;
+}
+
+.pay::backdrop {
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.form-control {
+  width: 20%;
+  min-width: 140px;
+  max-width: 500px;
+  margin: 2rem 1rem ;
+}
+.formControl{
+  align-items: flex-start;
+  width:20%;
+  margin:0rem 1rem
+}
+
+.form-control p {
+  display: flex;
+  margin: 0px;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid #f44336;
+  color: #f44336;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.pay_btn {
+  all: unset;
+  min-width: 70px;
+  padding: .8rem 1rem;
+  margin: 0rem 0rem;
+  margin-top: 1rem;
+  border-radius: .3rem;
+  font-size: .8125rem;
+  text-align: center;
+  cursor: not-allowed;
+  outline: 0;
+  font-size: 1rem;
+  color: #676d74;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sub-header {
+  display: flex;
+  justify-content: space-around;
+}
+
+.pay .form-actions {
+  justify-content: right;
+}
+
+.btn-cerrar-dialog {
+  all: unset;
+  padding: .1rem 1rem;
+  border-radius: .1rem;
+  background-color: transparent;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+  cursor: pointer;
+  color: black;
+  appearance: none;
+}
+
+.btn-cerrar-dialog:hover {
+  opacity: 1;
+}
+
+
+.enable {
+  cursor: pointer;
+}
+.enable:hover {
+  background-color: #EBEBEB;
+}
+.aceptar{
+  color:#03a9f4
+}

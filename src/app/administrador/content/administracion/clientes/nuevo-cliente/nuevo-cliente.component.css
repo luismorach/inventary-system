@@ -1,0 +1,13 @@
+.form-group {
+    flex-wrap: wrap;
+  }
+  
+  .formControl{
+    display: flex;
+    flex-grow: 1;
+    width: 40%;
+    min-width: 200px;
+    align-items: flex-end;
+   
+  }
+  

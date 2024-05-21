@@ -1,0 +1,96 @@
+<div class="form-container" *ngIf="kardex!==undefined && productOperation!==undefined">
+    <div class="back">
+        <button (click)="redirectToKardex()" class="form-button btn-save"><i class="fas fa-reply"></i>
+            &nbsp;Regresar</button>
+    </div>
+    <h3 class="form-title">
+        &nbsp;KARDEX {{kardex.type|uppercase}} ({{product.name|uppercase}} {{product.mark|uppercase}} 
+        {{product.model|uppercase}})
+    </h3>
+    <div class="datos" >
+        <div *ngIf="kardex.type.includes('compra')">
+            <h3>ENTRADAS</h3>
+            <p><strong>Fecha: </strong>{{kardex.date|date:'dd/MM/yyyy'}} {{kardex.time|date:'hh:mm:ss aaaa'}}</p>
+            <p><strong>N° factura: </strong>{{kardex.id_operation}}</p>
+            <p *ngIf="kardex.type==='compra'"><strong>Entrada de unidades: </strong>{{kardex.quantity_products}}</p>
+            <p *ngIf="kardex.type!=='compra'"><strong>Unidades devueltas: </strong>{{kardex.quantity_products}}</p>
+            <p *ngIf="currency"><strong>Costo de unidades: </strong>
+                {{productOperation.buy_price | currency:currency}}
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> 
+                    /  {{comunicatorSvc.converterToMainCoin(productOperation.buy_price,kardex.exchange)| currency:mainCoin}}</i>
+            </p>
+            <p *ngIf="currency"><strong>Precio de venta de unidades: </strong>
+                {{productOperation.sell_price| currency:currency}} 
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> 
+                    / {{comunicatorSvc.converterToMainCoin(productOperation.sell_price,kardex.exchange)| currency:mainCoin}}</i>
+            </p>
+            <p *ngIf="currency"><strong>Total: </strong>
+                {{productOperation.sell_price*kardex.quantity_products | currency:currency}} 
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> 
+                    / {{comunicatorSvc.converterToMainCoin(productOperation.sell_price,kardex.exchange)*
+                        kardex.quantity_products | currency:mainCoin}}</i>
+            </p>
+        
+            <p *ngIf="kardex.currency_code!=mainCoin.currency_code"><strong>
+                Tasa de cambio a la moneda principal: </strong>{{kardex.exchange | currency:mainCoin}}</p>
+        </div>
+        <div *ngIf="kardex.type.includes('venta')">
+            <h3>SALIDAS</h3>
+            <p><strong>Fecha: </strong>{{kardex.date|date:'dd/MM/yyyy'}} {{kardex.time|date:'hh:mm:ss aaaa'}}</p>
+            <p><strong>N° factura: </strong>{{kardex.id_operation}}</p>
+            <p *ngIf="kardex.type==='venta'"><strong>Salida de unidades: </strong>{{kardex.quantity_products}}</p>
+            <p *ngIf="kardex.type!=='venta'"><strong>Unidades devueltas: </strong>{{kardex.quantity_products}}</p>
+            <p *ngIf="currency"><strong>Precio: </strong>{{kardex.sell_price | currency:currency }}</p>
+            <p *ngIf="kardex.type==='venta' && currency"><strong>
+                SubTotal: </strong>{{kardex.sell_price*kardex.quantity_products | currency:currency}}</p>
+            <p *ngIf="kardex.type!=='venta' && currency"><strong>
+                Total: </strong>{{kardex.sell_price*kardex.quantity_products | currency:currency}}</p>
+            <p *ngIf="kardex.type==='venta' && sell!=undefined"><strong>Descuento de venta: </strong>{{sell.discount|percent:'1.1-1'}}</p>
+            <p *ngIf="kardex.type==='venta' && sell!=undefined && currency"><strong>
+                valor de descuento: </strong>{{calcularDescuentoVenta().value_discount| currency:currency}}</p>
+            <p *ngIf="kardex.type==='venta' && sell!=undefined && currency"><strong>
+                Total: </strong>{{calcularDescuentoVenta().price | currency:currency}}</p>
+        </div>
+        <div>
+            <h3>EXISTENCIAS</h3>
+            <p *ngIf="kardex.type==='compra'|| kardex.type==='Devolución de venta' "><strong>Inventario inicial: </strong>{{kardex.exist-kardex.quantity_products}}</p>
+            <p *ngIf="kardex.type==='venta' || kardex.type==='Devolución de compra' "><strong>
+                Inventario inicial: </strong>{{kardex.exist+kardex.quantity_products}}</p>
+            
+            <p><strong>Inventario final:</strong> {{kardex.exist}}</p>
+            <p *ngIf="currency"><strong>Precio inicial del producto: </strong>{{productOperation.sell_price |currency:currency}}
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> / 
+                    {{comunicatorSvc.converterToMainCoin(productOperation.sell_price,kardex.exchange)|currency:mainCoin}}</i>
+            </p>
+            
+            <p><strong>Descuento del producto:</strong> {{productOperation.discount_product|percent:'1.1-1'}}</p> 
+            <p *ngIf="currency"><strong>Valor de descuento: </strong>
+                {{productOperation.sell_price*productOperation.discount_product |currency:currency}}
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> / 
+                    {{comunicatorSvc.converterToMainCoin(productOperation.sell_price,kardex.exchange)
+                        *productOperation.discount_product |currency:mainCoin}}</i>
+            </p>
+           <p><strong>Impuesto: </strong>{{productOperation.tax_rate|percent:'1.1-1'}}</p>
+            <p *ngIf="currency"><strong>Valor del impuesto: </strong>
+                {{calcularMontoImponible(productOperation.sell_price)|currency:currency}}
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> / 
+                    {{calcularMontoImponible(
+                        comunicatorSvc.converterToMainCoin(
+                            productOperation.sell_price,kardex.exchange))|currency:mainCoin}}</i>
+            </p>
+            <p *ngIf="currency"><strong>Precio final del producto :</strong> 
+                {{comunicatorSvc.converterToSecondaryCoin(kardex.weighted_averages_sell,kardex.exchange)
+                    |currency:currency}}
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> / 
+                    {{kardex.weighted_averages_sell |currency:mainCoin}}</i>
+            </p>
+            <p *ngIf="currency"><strong>Total: </strong>  
+                {{comunicatorSvc.converterToSecondaryCoin(
+                kardex.weighted_averages_sell,kardex.exchange)*kardex.exist |currency:currency}}
+                <i *ngIf="kardex.currency_code!=mainCoin.currency_code"> / 
+                  {{kardex.weighted_averages_sell*kardex.exist |currency:mainCoin}}</i>
+            </p>
+        </div> 
+
+    </div>
+</div>

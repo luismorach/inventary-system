@@ -1,0 +1,17 @@
+ <div>
+    <router-outlet></router-outlet>
+</div>
+<dialog class="dialog" #warning>
+    <app-warning [message]="msj" (messageEvent)="receiveMessage($event)"></app-warning>
+</dialog>
+<dialog class="dialog" #error>
+    <app-error [message]="msj" (messageEvent)="receiveMessage($event)"></app-error>
+</dialog>
+<dialog class="dialog" #success>
+    <app-success [message]="msj" (messageEvent)="receiveMessage($event)"></app-success>
+</dialog>  
+<dialog  #quantity class="quantity">
+    <app-quantity [message]="msj" (messageEvent)="receiveMessage($event)"></app-quantity>
+</dialog>  
+
+ 

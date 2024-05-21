@@ -1,0 +1,80 @@
+.datos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 0;
+}
+.datos div{
+    width: 50%;
+}
+.datos div div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.datos button{
+   height:15px;
+   width:100px;
+   font-family: 'Roboto';
+   font-weight: bold;
+   text-align: center;
+}
+
+.datos button i{
+  margin: 0px;
+  font-size: 1.2rem;
+}
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .form-actions{
+    justify-content: right;
+  }
+  .btn {
+    all: unset;
+    min-width: 70px;
+    padding: .8rem 1rem;
+    margin: 0rem 0rem;
+    margin-top: 1rem;
+    border-radius: .3rem;
+    font-size: .8125rem;
+    text-align: center;
+    cursor: not-allowed;
+    outline: 0;
+    font-size: 1rem;
+    color: #676d74;
+  }
+  .btn-save,.btn-cancel{
+    margin-top:0px;
+  }
+
+  .aceptar{
+    color:#03a9f4
+  }
+  .enable {
+    cursor: pointer;
+  }
+  .enable:hover {
+    background-color: #EBEBEB;
+  }
+  .btn-cerrar-dialog {
+    all: unset;
+    padding: .1rem 1rem;
+    border-radius: .1rem;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor: pointer;
+    color: black;
+    appearance: none;
+  }
+  .btn-cerrar-dialog:hover{
+    opacity: 1;
+  }
+  

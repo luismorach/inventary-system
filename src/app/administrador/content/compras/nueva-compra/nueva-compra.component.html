@@ -1,0 +1,144 @@
+<div class="main-container">
+    <div class="left-container">
+        <p>Ingrese el código de barras del producto y luego haga clic en
+            <strong>“Verificar producto”</strong>
+            para cargar los datos en caso de que el producto ya este registrado, en caso contrario
+            se cargará el formulario para registrar un nuevo producto.
+        </p>
+        <div class="addBuy">
+            <div class="form" [formGroup]="formNewBuy">
+                <div class="form-group">
+                    <button class="btn enable" (click)="openListProductsModal()">
+                        <i class="fa fa-search"></i>
+                        &nbsp;&nbsp;BUSCAR PRODUCTO
+                    </button>
+                    <app-input class="formControl" [formGroup]="formNewBuy" [control]="'barcode'"
+                        [labelInfo]="{title:' Código de barra',required:false,type:'text'}"></app-input>
+
+                    <app-input class="formControl" [formGroup]="formNewBuy" [control]="'productQuantity'"
+                        [labelInfo]="{title:'Cantidad del producto',required:false,type:'text'}"></app-input>
+
+                    <button class="btn" [ngClass]="{'enable':formNewBuy.valid}" (click)="checkProduct(getProduct(),getQuantity(),
+                    checkExistProduct.bind(this),checkAdded.bind(this),addProduct.bind(this))">
+                        <i class="far fa-check-circle"></i>
+                        &nbsp;&nbsp;VERIFICAR PRODUCTO
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <div class="table-title">
+                <h6>Productos añadidos a la compra</h6>
+            </div>
+            <div class="table-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Código de barra</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio de compra</th>
+                                <th>Sub total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody #tab>
+                            <tr *ngFor="let product of products; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{product.barcode}}</td>
+                                <td>{{product.name}}&nbsp;{{product.mark}}&nbsp;{{product.model}}&nbsp;</td>
+                                <td>
+                                    <input currencyMask class="input-table"
+                                        [(ngModel)]="listProductsToBuy[i].quantity_products"
+                                        [options]="{ prefix: '',precision:0,align:'left' }">
+                                </td>
+                                <td>
+                                    <input [ngStyle]="{'font-size':'1rem'}" currencyMask class="input-table" [(ngModel)]="listProductsToBuy[i].buy_price"
+                                        [options]="comunicatorSvc.getAtributes(currencySelected)" />
+                                </td>
+                                <td>{{calcularSubtotal(product,i) |currency:currencySelected}}</td>
+                                <td class="icon" (click)="deleteProduct(i)">
+                                    <i class="fa fa-trash-can delete"></i>
+                                </td>
+                            </tr>
+                            <tr *ngIf="products.length>0">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td>{{calcularTotal()|currency:currencySelected}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="table-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Código de barra</th>
+                                <th>Producto</th>
+                                <th>Fecha de vencimiento</th>
+                                <th>Precio de venta</th>
+                            </tr>
+                        </thead>
+
+                        <tbody #tab>
+                            <tr *ngFor="let product of products; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{product.barcode}}</td>
+                                <td>{{product.name}}&nbsp;{{product.mark}}&nbsp;{{product.model}}&nbsp;</td>
+                                <td *ngIf="!product.can_expir">No vence</td>
+                                <td *ngIf="product.can_expir">
+                                    <input class="input-table" [(ngModel)]="product.expir" type="date"
+                                        min="{{date|date:'yyyy-MM-dd'}}">
+                                </td>
+                                <td> <input [ngStyle]="{'font-size':'1rem'}" currencyMask class="input-table"
+                                        [(ngModel)]="listProductsToBuy[i].sell_price"
+                                        [options]="comunicatorSvc.getAtributes(currencySelected)" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-container">
+        <h3>DATOS DE LA COMPRA</h3>
+        <div class="form" [formGroup]="formNewBuy">
+            <div class="form-group">
+                <div class="formControl" >
+                    <label [ngStyle]="{'color':'#676d74','font-size':'1rem'}">
+                        Fecha
+                    </label>
+                    <p>{{date|date:'dd/MM/yyyy'}}</p>
+                </div>
+
+                <app-select class="formControl" [formGroup]="formNewBuy" [control]="'provider'"
+                [selectInfo]="selectInfoProviders" [selectOptions]="providers"></app-select>
+
+                <app-select class="formControl" [formGroup]="formNewBuy" [control]="'currency'"
+                [selectInfo]="selectInfoCurrencies" [selectOptions]="currencies"></app-select>
+
+            </div>
+        </div>
+        <div class="total">
+            <h4>Total</h4>
+            <p *ngIf="currencySelected">{{calcularTotal()
+                |currency:currencySelected}}</p>
+
+        </div>
+        <button title="{{validateBuy().msj}}" class="form-button" [disabled]='!validateBuy().isValid'
+            [ngClass]="{'btn-save': validateBuy().isValid}"
+            (click)="showModalWarning('Los datos serán ingresados al sistema ¿desea continuar?')">
+            <i class="far fa-save"></i>
+            &nbsp;&nbsp;ACEPTAR</button>
+
+    </div>
+</div>

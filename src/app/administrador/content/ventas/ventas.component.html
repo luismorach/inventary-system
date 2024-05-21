@@ -1,0 +1,20 @@
+<div class="scroll info-container container">
+    <h2 class="title">
+        <i class={{title[0]}}></i>
+        &nbsp;{{title[1]}}
+    </h2>
+    <p class="msj">En el módulo VENTAS usted podrá registrar ventas de productos,puede usar lector de 
+        código de barra o hacerlo de forma manual digitando el código del producto. También puede ver 
+        las ventas realizadas y buscar ventas en el sístema
+    </p>
+    
+    <router-outlet></router-outlet>      
+</div>
+
+<dialog  #pay class="pay">
+    <app-pay [message]="msjPay" (messageEvent)="receiveMessagePay($event)"></app-pay>
+ </dialog>  
+ <dialog  #listProducts class="list-product">
+   <app-list-products [message]="msjListProducts" 
+     (messageEvent)="receiveMessageListProducts($event)"></app-list-products>
+ </dialog>

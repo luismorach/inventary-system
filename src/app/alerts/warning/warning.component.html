@@ -1,0 +1,11 @@
+<div class="dialog" #popup>
+    <i class="fa-regular fa-circle-question question" ></i>
+    <h3>¿Estás seguro?</h3>
+    <p *ngIf="message">{{message.description}}</p>
+    <div>
+        <button class="form-button btn-save" (click)="accept()">
+            &nbsp;&nbsp;ACEPTAR</button>
+        <button class="form-button btn-cancel" (click)="cancel()">
+            &nbsp;&nbsp;CANCELAR</button>
+    </div>
+</div>

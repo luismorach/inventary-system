@@ -1,0 +1,42 @@
+<div class="form-container">
+    <h3 class="form-title">
+        <i class="far fa-address-card"></i>
+        &nbsp;Información de la categoría
+    </h3>
+    <div class="form" [formGroup]="formNewCategory">
+        <div class="form-group">
+            <app-input class="formControl" [formGroup]="formNewCategory" [control]="'name'"
+                [labelInfo]="{title:'Nombre de la categoría',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewCategory" [control]="'ubication'"
+                [labelInfo]="{title:'Pasillo o ubicación de la categoría',required:true,type:'text'}"></app-input>
+        </div>
+
+        <div class="form-actions">
+            <ng-container *ngIf="!categoryToUpdate">
+                <div>
+                    <button class="form-button" [disabled]="formNewCategory.invalid"
+                        [ngClass]="{'btn-save':formNewCategory.valid}" (click)="showModalWarning('Los datos serán ingresados al sistema 
+                            ¿desea continuar?');this.type='create'">
+                        <i class="far fa-save"></i> &nbsp;&nbsp;ACEPTAR
+                    </button>
+                    <button class="form-button btn-clean" (click)="clearFormFields()">
+                        <i class="fas fa-paint-roller"></i> &nbsp;&nbsp;LIMPIAR
+                    </button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="categoryToUpdate">
+                <div>
+                    <button title="{{validateUpdate().message}}" class="form-button"
+                        [disabled]="!validateUpdate().isValid" [ngClass]="{'btn-update':validateUpdate().isValid}"
+                        (click)="showModalWarning('Los datos serán ingresados al sistema 
+                        ¿desea continuar?');this.type='update'">
+                        <i class="fa fa-arrows-rotate"></i>&nbsp;&nbsp;ACTUALIZAR</button>
+                </div>
+            </ng-container>
+        </div>
+
+        <p class="form-info">Los campos marcados con <i class="fab fa-font-awesome-alt"></i>
+            son obligatorios</p>
+    </div>
+</div>

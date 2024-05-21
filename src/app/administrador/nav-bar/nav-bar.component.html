@@ -1,0 +1,329 @@
+
+<div class="main-container scroll" [class.hide]="!show">
+
+    <div class="background">
+        <div class="close-nav-bar">
+            <i class="fa fa-xmark " (click)="showHideNavBar()"
+            [class.hide]="!show"></i>
+        </div>
+        <div class="header-options">
+            <img src="./assets/icono user.png">
+            <h5>{{user.names_user}} </h5>
+            <p>Administrador</p>
+        </div>
+        <div>
+            <ul>
+                <li>
+                    <a routerLink="dashboard"  routerLinkActive="activeLink" class="option">
+                        <div>
+                            <i class="fa-brands fa-dashcube fa-fw"></i> &nbsp;
+                            Dashboard
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <div (click)="subMenuAdministracion=!subMenuAdministracion"
+                        [ngStyle]="changeStyle(subMenuAdministracion)">
+                        <a class="option">
+                            <div>
+                                <i class="fa-solid fa-briefcase fa-fw"></i>
+                                &nbsp; Administracion
+                            </div>
+                            <i class="fa fa-chevron-down" [ngStyle]="arrowStyle(subMenuAdministracion)"></i>
+                        </a>
+
+                    </div>
+                    <ul *ngIf="subMenuAdministracion">
+                        <li>
+                            <a routerLink="administracion/cajas/nueva caja" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fa-solid fa-cash-register fa-fw"></i>
+                                    &nbsp;Nueva caja
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="administracion/categorías/nueva categoría" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fa fa-tags fa-fw"></i> &nbsp; Nueva categoría
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="administracion/proveedores/nuevo proveedor" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fa fa-shipping-fast fa-fw"></i> &nbsp; Nuevo proveedor
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="administracion/usuarios/nuevo usuario" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fa fa-user-tie fa-fw"></i> &nbsp; Nuevo usuario
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="administracion/clientes/nuevo cliente" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fa fa-child fa-fw"></i> &nbsp; Nuevo cliente
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <div (click)="subMenuProductos=!subMenuProductos" [ngStyle]="changeStyle(subMenuProductos)">
+                        <a class="option">
+                            <div>
+                                <i class="fa fa-boxes fa-fw"></i> &nbsp; Productos
+                            </div>
+                            <i class="fa fa-chevron-down" [ngStyle]="arrowStyle(subMenuProductos)"></i>
+                        </a>
+
+                    </div>
+                    <ul *ngIf="subMenuProductos">
+                        <li>
+                            <a routerLink="productos/nuevo producto" routerLinkActive="activeLink" 
+                            class="option" >
+                                <div>
+                                    <i class="fa fa-box fa-fw"></i> &nbsp; Nuevo producto
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="productos/productos en almacen" routerLinkActive="activeLink" 
+                            class="option">
+                                <div>
+                                    <i class="fa fa-boxes fa-fw"></i> &nbsp; Productos en almacen
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="productos/lo mas vendido" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fa fa-fire-alt fa-fw"></i> &nbsp; Lo más vendido
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="productos/productos por categoría" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fab fa-shopify fa-fw"></i> &nbsp; Productos por categoría
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="productos/productos por vencimiento" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-history fa-fw"></i> &nbsp; Productos por vencimiento
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <div (click)="subMenuCompras=!subMenuCompras" [ngStyle]="changeStyle(subMenuCompras)">
+                        <a class="option">
+                            <div>
+                                <i class="fas fa-shopping-basket fa-fw"></i>
+                                &nbsp; Compras
+                            </div>
+                            <i class="fas fa-chevron-down" [ngStyle]="arrowStyle(subMenuCompras)"></i>
+                        </a>
+                    </div>
+                    <ul *ngIf="subMenuCompras">
+                        <li>
+                            <a routerLink="compras/nueva compra" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Nueva compra
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="compras/compras realizadas" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Compras realizadas
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="compras/buscar compras" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-search-dollar fa-fw"></i> &nbsp; Buscar compra
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li>
+                    <div (click)="subMenuVentas=!subMenuVentas" [ngStyle]="changeStyle(subMenuVentas)">
+                        <a class="option">
+                            <div>
+                                <i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; Ventas
+                            </div>
+                            <i class="fas fa-chevron-down" [ngStyle]="arrowStyle(subMenuVentas)"></i>
+                        </a>
+
+                    </div>
+                    <ul *ngIf="subMenuVentas">
+                        <li>
+                            <a routerLink="ventas/nueva venta" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-cart-plus fa-fw"></i> &nbsp; Nueva venta
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a routerLink="ventas/ventas realizadas" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-coins fa-fw"></i> &nbsp; ventas realizadas
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a routerLink="ventas/buscar ventas" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-search-dollar fa-fw"></i> &nbsp; Buscar ventas
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <div (click)="subMenuDevoluciones=!subMenuDevoluciones"
+                        [ngStyle]="changeStyle(subMenuDevoluciones)">
+                        <a class="option">
+                            <div>
+                                <i class="fas fa-truck-loading fa-fw"></i> &nbsp; Devoluciones
+                            </div>
+                            <i class="fas fa-chevron-down" [ngStyle]="arrowStyle(subMenuDevoluciones)"></i>
+                        </a>
+                    </div>
+                    <ul *ngIf="subMenuDevoluciones">
+                        <li>
+                            <a routerLink="devoluciones/devoluciones realizadas" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-people-carry fa-fw"></i> &nbsp; Devoluciones realizadas
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="devoluciones/buscar devoluciones" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-dolly-flatbed fa-fw"></i> &nbsp; Buscar devoluciones
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div (click)="subMenuKardex=!subMenuKardex" [ngStyle]="changeStyle(subMenuKardex)">
+                        <a class="option">
+                            <div>
+                                <i class="fas fa-warehouse fa-fw"></i> &nbsp; Kardex
+                            </div>
+                            <i class="fas fa-chevron-down" [ngStyle]="arrowStyle(subMenuKardex)"></i>
+                        </a>
+
+                    </div>
+                    <ul *ngIf="subMenuKardex">
+                        <li>
+                            <a routerLink="kardex/kardex general" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-pallet fa-fw"></i> &nbsp; Kardex general
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="kardex/buscar kardex" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-search fa-fw"></i> &nbsp; Buscar kardex
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div (click)="subMenuReportes=!subMenuReportes" [ngStyle]="changeStyle(subMenuReportes)">
+                        <a class="option">
+                            <div>
+                                <i class="far fa-file-pdf fa-fw"></i> &nbsp; Reportes
+                            </div>
+                            <i class="fas fa-chevron-down" [ngStyle]="arrowStyle(subMenuReportes)"></i>
+                        </a>
+
+                    </div>
+                    <ul *ngIf="subMenuReportes">
+                        <li>
+                            <a routerLink="reportes/reportes de venta" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; Reporte general de ventas
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="reportes/reportes de inventario" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-box-open fa-fw"></i> &nbsp; Reportes de inventario
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div (click)="subMenuConfiguraciones=!subMenuConfiguraciones"
+                        [ngStyle]="changeStyle(subMenuConfiguraciones)">
+                        <a class="option">
+                            <div>
+                                <i class="fas fa-cogs fa-fw"></i>
+                                &nbsp; Configuraciones
+                            </div>
+                            <i class="fas fa-chevron-down" [ngStyle]="arrowStyle(subMenuConfiguraciones)"></i>
+                        </a>
+
+                    </div>
+                    <ul *ngIf="subMenuConfiguraciones">
+                        <li>
+                            <a routerLink="configuraciones/datos de la empresa" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-store-alt fa-fw"></i> &nbsp; Datos de la empresa
+                                </div>
+                            </a>
+                            <a routerLink="configuraciones/nueva moneda" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-coins fa-fw"></i> &nbsp; Monedas
+                                </div>
+                            </a>
+                            <a routerLink="configuraciones/nuevo impuesto" routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fa-solid fa-landmark"></i> &nbsp; Impuéstos
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            
+                            <a [routerLink]="['administracion','usuarios','actualizar cuenta',user.id_user]" 
+                             routerLinkActive="activeLink" class="option">
+                                <div>
+                                    <i class="fas fa-user-cog fa-fw"></i> &nbsp; Actualizar cuenta
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="splash" *ngIf="show"></div>

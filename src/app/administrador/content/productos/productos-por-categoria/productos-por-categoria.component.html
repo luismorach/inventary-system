@@ -1,0 +1,53 @@
+<div class="main-container">
+    <div class="left-container">
+        <h3><i class="fas fa-tags"></i> &nbsp;CATEGORÍAS </h3>
+        <ul>
+            <li class="option" *ngFor="let data of productByCategory;let i =index"
+                (click)="selectedCategory(data.category)">
+                {{data.category.name}}&nbsp;&nbsp;<span class="badge">{{data.products.length}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="right-container">
+        <ng-container *ngIf="!selected">
+            <div class="presentation">
+                <i class="fab fa-shopify fa-fw fa-5x"></i>
+                <h3>Categoría no seleccionada</h3>
+                <p>Por favor seleccione una categoría para empezar a buscar productos.</p>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="selected">
+            <div class="table-container" *ngIf="selected">
+                <div class="table-title">
+                    <h6>Productos en la categoría "{{currentCategory.name}}"</h6>
+                </div>
+                <div class="table-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Código de barra</th>
+                                    <th>Descripcion</th>
+                                    <th>Existentes</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr *ngFor="let product of currentProducts let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{product.barcode}}</td>
+                                    <td>{{product.name}} &nbsp; {{product.mark}}&nbsp;{{product.model}}</td>
+                                    <th>{{product.exist_quantity}}</th>
+    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> 
+        </ng-container>
+       
+        
+    </div>
+</div>

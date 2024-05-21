@@ -1,0 +1,109 @@
+.form-container{
+  margin:0px;
+}
+.back button{
+  height:15px;
+  width:100px;
+  font-family: 'Roboto';
+  font-weight: bold;
+  text-align: center;
+}
+
+.back button i{
+ margin: 0px;
+ font-size: 1.2rem;
+}
+.totales{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 0px;
+}
+.table-container{
+    margin-bottom: 0px;
+}
+.totales div{
+    width: 20%;
+    margin-right:5rem;
+    display: flex;
+    justify-content: space-between;
+}
+.totales div p{
+    margin: .5rem;
+}
+.line{
+    border-bottom: 1px dashed #D8D8D8;
+    margin:2rem 0rem
+}
+.form-title{
+    text-align: center;
+}
+.datos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 0;
+}
+.datos div{
+    width: 100%;
+    margin: 1rem;
+}
+.datos div h3{
+    color:white;
+    padding: .3rem;
+    background-color: #424242;
+    text-align: center;
+}
+.back{
+    display: flex;
+    justify-content: right;
+}
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .btn-cerrar-dialog {
+    all: unset;
+    padding: .1rem 1rem;
+    border-radius: .1rem;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor: pointer;
+    color: black;
+    appearance: none;
+  }
+  .btn-cerrar-dialog:hover{
+    opacity: 1;
+  }
+  
+  .btn {
+    all: unset;
+    min-width: 70px;
+    padding: .8rem 1rem;
+    margin: 0rem 0rem;
+    margin-top: 1rem;
+    border-radius: .3rem;
+    font-size: .8125rem;
+    text-align: center;
+    cursor: not-allowed;
+    outline: 0;
+    font-size: 1rem;
+    color: #676d74;
+  }
+  .aceptar{
+    color:#03a9f4
+  }
+  .enable {
+    color: #03a9f4;
+    border:1px solid #03a9f4;
+    cursor: pointer;
+  }
+
+  .enable:hover {
+    background-color: #EBEBEB;
+  }
+ 

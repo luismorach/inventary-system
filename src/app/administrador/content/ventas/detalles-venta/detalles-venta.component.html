@@ -1,0 +1,84 @@
+<div class="form-container">
+    <div *ngIf="!this.router.url?.includes('cajero')" class="back">
+        <button (click)="redirectToVentasRealizadas()" class="form-button btn-save"><i class="fas fa-reply"></i>
+            &nbsp;Regresar</button>
+    </div>
+    <h3 class="form-title">
+        &nbsp;Datos de la venta
+    </h3>
+    <div class="datos" *ngIf="sell!==undefined">
+        <div>
+            <h3>DATOS DE VENTA</h3>
+            <p><strong>N° factura: </strong>{{sell.id_sell}}</p>
+            <p><strong>Fecha: </strong>{{sell.date|date:'dd/MM/yyyy'}} {{sell.time|date:'hh:mm:ss aaaa'}}</p>
+            <p><strong>Tipo de venta: </strong>{{sell.type_sell}}</p>
+        </div>
+        <div>
+            <h3>CAJA Y USUARIO</h3>
+            <p><strong>Caja: </strong>{{register_sell.name_register}}</p>
+            <p><strong>Vendedor: </strong>{{user_sell.names_user}} {{user_sell.last_names_user}}</p>
+            <p><strong>Cliente: </strong> {{client.names_client}} {{client.last_names_client}}</p>
+        </div>
+        <div>
+            <h3>TOTALES Y ESTADO</h3>
+            <p><strong>Total: </strong>{{sell.total_sell|currency:this.currency}}</p>
+            <p><strong>Pagado: </strong>{{comunicatorSvc.converterToMainCoin(sell.total_paid,
+                currency.exchange)|currency:this.currency}}</p>
+            <p><strong>Estado:</strong> {{sell.state}}</p>
+            <p *ngIf="!this.router.url?.includes('cajero')"><strong>Costos de
+                    venta:</strong>{{calculateSaleCost()|currency:this.currency}}</p>
+            <p *ngIf="!this.router.url?.includes('cajero')"><strong>Utilidad (ganancias):
+                </strong>{{comunicatorSvc.converterToMainCoin(sell.total_paid,
+                currency.exchange)-calculateSaleCost()|currency:this.currency}}
+            </p>
+        </div>
+
+    </div>
+    <h3 class="form-title">
+        &nbsp;Detalles de venta
+    </h3>
+    <app-table [tableInfo]="tableInfoProducts" [dataSource]="dataSourceProducts" [tableColumns]="tableColumnsProducts"
+        (actionEvent)="showModalQuantityBack($event)">
+    </app-table>
+
+    <div class="totales" *ngIf="sell!==undefined">
+        <div>
+            <p><strong>SUBTOTAL </strong></p>
+            <p>+ {{calculatePartialTotal()|currency:this.currency}}</p>
+        </div>
+        <div *ngFor="let tax of taxes">
+            <p *ngIf="tax.tax_rate>0"><strong>{{tax.tax_name}}</strong></p>
+            <p *ngIf="tax.tax_rate>0">+ {{calculateTaxAmount(tax.tax_rate)|currency:this.currency}}</p>
+        </div>
+        <div>
+            <p><strong>DESCUENTO </strong></p>
+            <p>- {{calculateDiscountOnSale()|currency:this.currency}}</p>
+        </div>
+        <div>
+            <p><strong>TOTAL </strong></p>
+            <p>{{calculateTotalAmount()|currency:this.currency}}</p>
+        </div>
+    </div>
+    <div class="line"></div>
+    <h3 class="form-title">
+        &nbsp;Detalles de pagos
+    </h3>
+
+    <app-table [tableInfo]="tableInfoPayments" [dataSource]="dataSourcePayments" [tableColumns]="tableColumnsPayments">
+    </app-table>
+
+    <div *ngIf="sell!==undefined && sell.state==='Pendiente'" class="form-actions">
+        <button class="form-button btn enable" (click)="showModalPayment({totalAmount:sell.total_sell,
+            totalPaid:comunicatorSvc.converterToMainCoin(sell.total_paid,currency.exchange),showAlert:true})">
+            <i class="fas fa-money-bill-wave"></i>&nbsp;&nbsp;REALIZAR PAGO </button>
+
+    </div>
+    <div class="line"></div>
+    <h3 class="form-title">
+        &nbsp;Detalles de devoluciones
+    </h3>
+
+    <app-table [tableInfo]="tableInfoRepayments" [dataSource]="dataSourceRepayments"
+        [tableColumns]="tableColumnsRepayments"> </app-table>
+
+</div>

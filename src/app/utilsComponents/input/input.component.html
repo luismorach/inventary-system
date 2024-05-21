@@ -1,0 +1,16 @@
+<ng-container *ngIf="labelInfo.title">
+    <div [formGroup]="formGroup" class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(formGroup,control)&&
+    elementHasFocus[0],'input-on-focus-fail':!verifyStyleInput(formGroup,control)}">
+        <label class="form-label" [ngClass]="{'label-on-focus-down':elementHasFocus[0]&&positionLabel[0]&&labelInfo.type!=='date',
+        'label-on-focus-up': elementHasFocus[0]&&!positionLabel[0]}" 
+        [ngStyle]="animationLabel(formGroup,(labelInfo.type==='date')?'select':control)">
+            {{labelInfo.title}}
+            <ng-container *ngIf="labelInfo.required">
+                <i class="fab fa-font-awesome-alt"></i>
+            </ng-container>
+        </label>
+        <input [type]="labelInfo.type"  formControlName="{{control}}" (focus)="isFocused(0,formGroup,control)"
+            (focusout)="isFocused(0,formGroup,control)" class="form-input"
+            [ngStyle]="styleForeground(formGroup,control)">
+    </div>
+</ng-container>

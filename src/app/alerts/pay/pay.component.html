@@ -1,0 +1,59 @@
+<div #pay class="pay">
+    <div class="header">
+        <h2 class="title">Realizar pago de venta</h2>
+        <button class="btn-cerrar-dialog" (click)="cancel()">x</button>
+
+    </div>
+    <div class="sub-header">
+        <h3 *ngIf="mainCurrency && message">Total a pagar:
+            {{this.comunicatorSvc.converter(message.totalAmount,mainCurrency,currencyPay)|
+            currency:currencyPay}}</h3>
+        <h3 *ngIf="mainCurrency && message">Pagado:
+            {{this.comunicatorSvc.converter(message.totalPaid,mainCurrency,currencyPay)|
+            currency:currencyPay}}</h3>
+    </div>
+    <div class="form" [formGroup]="formNewPay">
+        <div class="form-group">
+            <app-select class="formControl" [formGroup]="formNewPay" [control]="'type'"
+                [selectInfo]="selectInfoPaymentType" [selectOptions]="selectOptionsPaymentType"></app-select>
+
+            <app-select class="formControl" [formGroup]="formNewPay" [control]="'currency_code'"
+                [selectInfo]="selectInfoCurrencies" [selectOptions]="currencies"></app-select>
+        </div>
+        <div class="form-group">
+            <div class="form-control" [ngClass]="{'input-on-focus':elementHasFocus[12]}">
+                <label class="form-label label-on-focus-up"  style="color:#f44336">
+                    Pendiente
+                </label>
+                <p *ngIf="mainCurrency && message">{{
+                    this.comunicatorSvc.converter(message.totalAmount-message.totalPaid,mainCurrency,currencyPay)|
+                    currency:currencyPay}}</p>
+            </div>
+            <div *ngIf="currencyPay" class="form-control" [ngClass]="{'input-on-focus-success':verifyStyleInput(formNewPay,'mount')&&
+            elementHasFocus[13],'input-on-focus-fail':!verifyStyleInput(formNewPay,'mount')}">
+                <label class="form-label" [ngClass]="{'label-on-focus-up':elementHasFocus[13]}"
+                    [ngStyle]="animationLabel(formNewPay, 'select')">
+                    Monto
+                    <i class="fab fa-font-awesome-alt"></i>
+                </label>
+
+                <input currencyMask autofocus formControlName="mount" (focus)="isFocused(13,formNewPay,'mount')"
+                    (focusout)="isFocused(13,formNewPay,'mount')" class="form-input"
+                    [ngStyle]="styleForeground(formNewPay,'mount') "
+                    [options]="comunicatorSvc.getAtributes(currencyPay)">
+            </div>
+            <ng-container *ngIf="this.formNewPay.get('type')?.value=== 'Transacción eléctronica'">
+                <app-input class="formControl" [formGroup]="formNewPay" [control]="'reference'"
+                    [labelInfo]="{title:'Referencia',required:true,type:'text'}"></app-input>
+            </ng-container>
+        </div>
+        <div class="form-actions">
+            <button class="form-button pay_btn" title="{{validarPago().msj}}" (click)="acceptPay()"
+            [disabled]="!validarPago().isValid"    
+            [ngClass]="{'enable aceptar':validarPago().isValid}">
+                <i class="fas fa-money-bill-wave"></i> &nbsp;&nbsp;AGREGAR PAGO</button>
+            <button class="form-button pay_btn enable" (click)="cancel()" style="color:#f44336">
+                <i class="far fa-times-circle"></i> &nbsp;&nbsp;CANCELAR</button>
+        </div>
+    </div>
+</div>

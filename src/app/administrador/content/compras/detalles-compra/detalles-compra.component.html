@@ -1,0 +1,23 @@
+<div class="form-container">
+    <div class="datos">
+        <div>
+            <p> <strong>FECHA:</strong> {{buy.time|date:'dd/MM/yyyy'}}</p>
+            <p> <strong>COMPRA REGISTRADA POR:</strong> {{userBuy.names_user}}
+                {{userBuy.last_names_user}}</p>
+        </div>
+        <div>
+            <p> <strong>PROVEEDOR:</strong> {{providerBuy.name_provider}}
+                {{providerBuy.address_provider}}</p>
+
+        </div>
+        <button (click)="redirectToComprasRealizadas()" class="form-button btn-save"><i class="fas fa-reply"></i>
+            &nbsp;Regresar</button>
+    </div>
+    <app-table [tableInfo]="tableInfoProducts" [dataSource]="dataSourceProducts" [tableColumns]="tableColumnsProducts"
+        [footer]="['','','','','Total',this.calcularTotal()|currency:currency,'']"
+        (actionEvent)="showModalQuantityBack($event)">
+    </app-table>
+
+    <app-table [tableInfo]="tableInfoRepayments" [dataSource]="dataSourceRepayments"
+        [tableColumns]="tableColumnsRepayments"></app-table>
+</div>

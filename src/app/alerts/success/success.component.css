@@ -1,0 +1,6 @@
+.dialog{
+    width: 100%;
+}
+.btn-save,.btn-cancel{
+    margin-top:0px;
+  }

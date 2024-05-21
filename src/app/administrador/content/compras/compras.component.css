@@ -1,0 +1,9 @@
+.list-product {
+    width: 60%;
+    height: 100%;
+    border: none;
+  }
+  
+  .list-product::backdrop {
+    background-color: rgba(0, 0, 0, .5);
+  }

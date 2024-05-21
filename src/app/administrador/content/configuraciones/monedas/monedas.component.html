@@ -1,0 +1,35 @@
+<div class="scroll info-container container">
+    <h2 class="title">
+        <i class="{{title[0]}}">
+        </i> &nbsp;{{title[1]}}
+    </h2>
+    <p class="msj">En el módulo MONEDAS usted podrá registrar monedas en  
+        el sistema para poder usarla como su tipo de divisa, además podrá 
+        actualizar los datos de las modedas, 
+        realizar búsquedas o eliminarlas si lo desea. Debe tener en cuenta 
+        que el registro o la actualización de monedas debe hacerce segun los códigos del 
+        pais,idioma y moneda establecidas en las normas ISO
+    </p>
+    <ul class="list-options">
+        <li [ngClass]="selectedClass(option1)">
+            <a routerLink="nueva moneda" 
+            [class.active]="option1" class="option-component">
+                <div class="container">
+                    <i class="fas fa-coins fa-fw"></i>
+                    &nbsp;&nbsp;NUEVA MONEDA
+                </div>
+            </a> 
+        </li>
+        <li [ngClass]="selectedClass(option2)">
+            <a routerLink="lista monedas"
+            [class.active]="option2" class="option-component">
+                <div class="container">
+                    <i class="fas fa-clipboard-list fa-fw"></i>
+                    &nbsp;&nbsp;LISTA DE MONEDAS
+                </div>
+            </a>
+        </li>
+        
+    </ul>        
+    <router-outlet></router-outlet>      
+</div>

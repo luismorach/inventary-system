@@ -1,0 +1,29 @@
+<div #quantity class="quantity">
+    <div class="header">
+        <h2 *ngIf="message" class="title">{{message.title}}</h2>
+        <button class="btn-cerrar-dialog" 
+        (click)="cancel()">x</button>
+    </div>
+    <div class="form" [formGroup]="quantityForm">
+        <app-input class="formControl" [formGroup]="quantityForm" [control]="'quantity'"
+        [labelInfo]="{title:'Cantidad',required:false,type:'text'}"></app-input>
+       
+    </div> 
+    <div *ngIf="message && message.title.includes('Agregar')" class="form-actions">
+        <button class="form-button" [disabled]="!(quantityForm.get('quantity')?.value>0)"
+            [ngClass]="{'btn-save':quantityForm.get('quantity')?.value>0}"
+            (click)="accept()">
+            &nbsp;&nbsp;ACEPTAR</button>
+        <button class="form-button btn-cancel" (click)="cancel()">
+            &nbsp;&nbsp;CANCELAR</button>
+    </div>
+
+    <div *ngIf="message && message.title.includes('Devolución')" class="form-actions">
+        <button class="form-button btn"
+            [ngClass]="{'enable aceptar':quantityForm.get('quantity')?.value>0}"
+            (click)="accept()">
+           <i class="fas fa-truck-loading fa-fw"></i> &nbsp;&nbsp;REALIZAR DEVOLUCIÓN</button>
+        <button class="form-button btn enable" (click)="cancel()" style="color:#f44336">
+            <i class="far fa-times-circle"></i> &nbsp;&nbsp;CANCELAR</button>
+    </div> 
+</div>

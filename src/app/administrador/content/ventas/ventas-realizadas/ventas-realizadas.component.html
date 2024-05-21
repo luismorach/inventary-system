@@ -1,0 +1,8 @@
+<div *ngIf="criterio===null">
+    <strong>Fecha: </strong>{{initialDate|date:'dd/MM/yyyy'}}  <strong>al</strong>  {{endDate|date:'dd/MM/yyyy'}}
+</div>
+<div *ngIf="criterio!==null">
+    <strong>Criterio de busqueda:</strong> {{criterio}}
+</div>
+<app-table [tableInfo]="tableInfo" [dataSource]="sales" [tableColumns]="tableColumns" 
+(actionEvent)="redirectToDetallesVenta($event)"></app-table>

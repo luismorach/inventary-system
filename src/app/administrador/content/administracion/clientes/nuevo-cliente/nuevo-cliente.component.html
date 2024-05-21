@@ -1,0 +1,77 @@
+<div class="form-container">
+    <h3 class="form-title">
+        <i class="far fa-address-card"></i>
+        &nbsp;Información personal
+    </h3>
+    <div class="form" [formGroup]="formNewClient">
+        <div class="form-group">
+            <app-select class="formControl" [formGroup]="formNewClient" [control]="'document_type_client'"
+            [selectInfo]="selectInfo" [selectOptions]="selectOptions"></app-select>
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'document_number_client'"
+                [labelInfo]="{title:'Número de documento',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'names_client'"
+                [labelInfo]="{title:'Nombres',required:true,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'last_names_client'"
+                [labelInfo]="{title:' Apellidos',required:true,type:'text'}"></app-input>
+
+        </div>
+        <h3 class="form-title">
+            <i class="fas fa-map-marked-alt"></i>
+            &nbsp;Información de residencia
+        </h3>
+        <div class="form-group">
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'state_client'"
+                [labelInfo]="{title:'Estado, provincia o departamento',required:false,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'city_client'"
+                [labelInfo]="{title:'Ciudad o pueblo',required:false,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'street_client'"
+                [labelInfo]="{title:'Calle o direccion de casa',required:false,type:'text'}"></app-input>
+
+        </div>
+        <h3 class="form-title">
+            <i class="far fa-address-book"></i>
+            &nbsp;Información de contacto
+        </h3>
+
+        <div class="form-group">
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'phone_number_client'"
+                [labelInfo]="{title:'Télefono',required:false,type:'text'}"></app-input>
+
+            <app-input class="formControl" [formGroup]="formNewClient" [control]="'email_client'"
+                [labelInfo]="{title:'Email',required:false,type:'text'}" ></app-input>
+            
+        </div>
+        <div class="form-actions">
+            <ng-container *ngIf="!clientToUpdate">
+                <div>
+                    <button class="form-button" [disabled]="formNewClient.invalid"
+                        [ngClass]="{'btn-save':formNewClient.valid}" (click)="showModalWarning('Los datos serán ingresados al sistema 
+                            ¿desea continuar?');this.type='create'">
+                        <i class="far fa-save"></i> &nbsp;&nbsp;ACEPTAR
+                    </button>
+                    <button class="form-button btn-clean" (click)="clearFormFields()">
+                        <i class="fas fa-paint-roller"></i> &nbsp;&nbsp;LIMPIAR
+                    </button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="clientToUpdate">
+                <div>
+                    <button title="{{validateUpdate().message}}" class="form-button"
+                        [disabled]="!validateUpdate().isValid" [ngClass]="{'btn-update':validateUpdate().isValid}"
+                        (click)="showModalWarning('Los datos serán ingresados al sistema 
+                        ¿desea continuar?');this.type='update'">
+                        <i class="fa fa-arrows-rotate"></i>&nbsp;&nbsp;ACTUALIZAR</button>
+                </div>
+            </ng-container>
+        </div>
+        <p class="form-info">Los campos marcados con <i class="fab fa-font-awesome-alt"></i>
+            son obligatorios</p>
+    </div>
+</div>
