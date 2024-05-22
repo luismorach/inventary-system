@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PermissionsGuard } from './guard/permissions.guard';
 import { NotFoundComponent } from './alerts/not-found/not-found.component';
-import { UsersResolve } from './administrador/content/administracion/usuarios/resolver/users.resolver';
-import { PermissionsToRecoverPassword } from './guard/permissionToRecoverPassword';
 
 const appRoutes: Routes = [
    {path:'',loadChildren: () => import
