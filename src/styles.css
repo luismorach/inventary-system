@@ -2,6 +2,23 @@
 
 /*
 /*estilos a todo el documento*/
+
+@font-face {
+  font-family: 'roboto';
+  src: url('./assets/fonts/roboto/Roboto-Regular.ttf')
+}
+@font-face {
+  font-family: 'roboto light';
+  src: url('./assets/fonts/roboto/Roboto-Light.ttf')
+}
+@font-face {
+  font-family: 'roboto bold';
+  src: url('./assets/fonts/roboto/Roboto-Bold.ttf')
+}
+@font-face {
+  font-family: 'roboto thin';
+  src: url('./assets/fonts/roboto/Roboto-Thin.ttf')
+}
 * {
   font-family: 'roboto light';
   font-size: .8rem;
@@ -414,7 +431,7 @@ input[type=number] {
 .table-title h6 {
   margin: 0px;
   color: #4e73df;
-  font-family: roboto;
+  font-family: 'roboto';
   font-weight: 700;
   font-size: 1rem;
 }
@@ -454,7 +471,7 @@ td {
 .dataTable-filter,
 .dataTable-length {
   color: #858796;
-  font-family: roboto;
+  font-family: 'roboto';
   font-weight: 700;
   text-align: left;
 }
@@ -653,7 +670,7 @@ td {
 }
 
 .dialog h3 {
-  font-family: 'Roboto';
+  font-family: 'roboto';
   font-size: 1.8rem;
   font-weight: 500;
   color: rgb(90, 90, 90)

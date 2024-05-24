@@ -7,7 +7,7 @@ COPY package*.json /usr/src/app
 
 RUN npm install
 
-COPY ./node_modules/fontawesome-free-6.4.0-web /usr/src/app/
+COPY ./font-awesome /usr/src/app/node_modules
 
 COPY . /usr/src/app
 

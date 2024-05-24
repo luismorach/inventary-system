@@ -48,7 +48,7 @@
 .header-options h5{
     margin: 0;
     padding: 0;
-    font-family: roboto;
+    font-family: 'roboto';
     font-size: 1.4rem;
     padding-top: 20px;
 }
@@ -101,7 +101,7 @@ a {
     
 }
 a div{
-    font-family: roboto;
+    font-family: 'roboto';
     color: white;
 }
 

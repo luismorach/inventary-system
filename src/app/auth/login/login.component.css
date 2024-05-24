@@ -30,7 +30,7 @@
 }
 
 .font{
-    font-family: 'Roboto';
+    font-family: 'roboto';
     font-weight: bold;
 }
 .sing {
@@ -117,9 +117,8 @@ select {
 
 
 .style-login p{
-    font-family: 'roboto';
+    font-family: 'roboto thin';
     font-size: 2rem;
-    font-weight: 100;
     width: 10rem;
 }
 #cabezera {

@@ -88,16 +88,14 @@
   }
   
   .title-option-dashboard {
-    font-family: roboto;
-    font-weight: 700;
+    font-family: 'roboto bold';
     font-size: .7rem;
     margin-bottom: .55rem;
   }
   
   .info {
-    font-family: roboto;
+    font-family: 'roboto bold';
     color: #5a5c69;
-    font-weight: 700;
     font-size: 1.25rem;
   }
   
