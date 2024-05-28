@@ -16,8 +16,7 @@ export class DevolucionesService {
     return this.http.get<Repayment[]>(this.apiURL);
   }
   public getRepaymentsBydate(initialDate:Date,endDate:Date): Observable<Repayment[]> {
-    return this.http.get<Repayment[]>(this.apiURL+'/'+new Intl.DateTimeFormat('es-CL').format(initialDate)
-    +'/'+new Intl.DateTimeFormat('es-CL').format(endDate));
+    return this.http.get<Repayment[]>(this.apiURL+'/'+initialDate.toISOString()+'/'+endDate.toISOString());
   }
   //accedo al backend para obtener datos de la caja cuyo id se pasa como parametro
   public getRepayment(id_repayment: number): Observable<Repayment[]> {

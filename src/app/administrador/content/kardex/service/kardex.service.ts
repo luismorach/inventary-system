@@ -19,8 +19,8 @@ export class KardexService {
   }
   public getKardexByDate(initialDate:Date,endDate:Date): Observable<Kardex[]> {
     return this.http.get<Kardex[]>(this.apiURL+'ByDate/'+
-    new Intl.DateTimeFormat('es-CL').format(initialDate)+'/'+
-    new Intl.DateTimeFormat('es-CL').format(endDate));
+    initialDate.toISOString()+'/'+
+    endDate.toISOString());
   }
   public getKardexByProduct(barcode:string): Observable<Kardex[]> {
     return this.http.get<Kardex[]>(this.apiURL+'ByProduct/'+barcode);

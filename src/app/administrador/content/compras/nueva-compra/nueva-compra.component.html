@@ -8,7 +8,7 @@
         <div class="addBuy">
             <div class="form" [formGroup]="formNewBuy">
                 <div class="form-group">
-                    <button class="btn enable" (click)="openListProductsModal()">
+                    <button class="btn enable" (click)="showProductsModal(true)">
                         <i class="fa fa-search"></i>
                         &nbsp;&nbsp;BUSCAR PRODUCTO
                     </button>
@@ -18,8 +18,8 @@
                     <app-input class="formControl" [formGroup]="formNewBuy" [control]="'productQuantity'"
                         [labelInfo]="{title:'Cantidad del producto',required:false,type:'text'}"></app-input>
 
-                    <button class="btn" [ngClass]="{'enable':formNewBuy.valid}" (click)="checkProduct(getProduct(),getQuantity(),
-                    checkExistProduct.bind(this),checkAdded.bind(this),addProduct.bind(this))">
+                    <button class="btn" [ngClass]="{'enable':formNewBuy.valid}" (click)="validateProduct(getProduct(),getQuantity(),
+                    checkProductExistence.bind(this),checkAdded.bind(this),addProduct.bind(this))">
                         <i class="far fa-check-circle"></i>
                         &nbsp;&nbsp;VERIFICAR PRODUCTO
                     </button>
@@ -59,7 +59,7 @@
                                     <input [ngStyle]="{'font-size':'1rem'}" currencyMask class="input-table" [(ngModel)]="listProductsToBuy[i].buy_price"
                                         [options]="comunicatorSvc.getAtributes(currencySelected)" />
                                 </td>
-                                <td>{{calcularSubtotal(product,i) |currency:currencySelected}}</td>
+                                <td>{{calculateSubtotal(product,i) |currency:currencySelected}}</td>
                                 <td class="icon" (click)="deleteProduct(i)">
                                     <i class="fa fa-trash-can delete"></i>
                                 </td>
@@ -70,7 +70,7 @@
                                 <td></td>
                                 <td></td>
                                 <td><strong>Total</strong></td>
-                                <td>{{calcularTotal()|currency:currencySelected}}</td>
+                                <td>{{calculateTotal()|currency:currencySelected}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -96,7 +96,7 @@
                                 <td>{{product.name}}&nbsp;{{product.mark}}&nbsp;{{product.model}}&nbsp;</td>
                                 <td *ngIf="!product.can_expir">No vence</td>
                                 <td *ngIf="product.can_expir">
-                                    <input class="input-table" [(ngModel)]="product.expir" type="date"
+                                    <input [ngStyle]="{'font-size':'1rem'}" class="input-table" [(ngModel)]="product.expir" type="date"
                                         min="{{date|date:'yyyy-MM-dd'}}">
                                 </td>
                                 <td> <input [ngStyle]="{'font-size':'1rem'}" currencyMask class="input-table"
@@ -130,7 +130,7 @@
         </div>
         <div class="total">
             <h4>Total</h4>
-            <p *ngIf="currencySelected">{{calcularTotal()
+            <p *ngIf="currencySelected">{{calculateTotal()
                 |currency:currencySelected}}</p>
 
         </div>

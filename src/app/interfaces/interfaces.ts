@@ -46,7 +46,7 @@ export interface Category {
 export interface Provider {
     id_provider: number;
     document_type: string;
-    document_number: number;
+    document_number: string;
     name_provider: string;
     address_provider: string;
     name_boss: string;
@@ -56,7 +56,7 @@ export interface Provider {
 export interface User {
     id_user: number;
     document_type_user: string;
-    document_number_user: number;
+    document_number_user: string;
     range_user: string;
     names_user: string;
     last_names_user: string;
@@ -71,7 +71,7 @@ export interface User {
 export interface Client {
     id_client: number;
     document_type_client: string;
-    document_number_client: number;
+    document_number_client:string;
     names_client: string;
     last_names_client: string;
     state_client: string;
@@ -215,7 +215,7 @@ export interface Kardex {
 export interface Building {
     id_building: number;
     document_type: string;
-    document_number: number;
+    document_number:string;
     name: string;
     currency_code: string;
     address: string;

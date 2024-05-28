@@ -22,7 +22,7 @@ export class DetallesCompraComponent extends DinamicComponent {
 user: User = {
     id_user: 0,
     document_type_user: '',
-    document_number_user: 123,
+    document_number_user:'123',
     range_user: '',
     names_user: '',
     last_names_user: '',

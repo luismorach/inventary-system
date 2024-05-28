@@ -13,7 +13,7 @@ export class DinamicPipe implements PipeTransform {
   transform(value: any, ...args: any[]): any {
     switch (args[0]) {
       case 'date':
-        return this.datePipe.transform(value, args[1])
+        return this.datePipe.transform(value, args[1],'GMT+0')
       case 'percent':
         return this.formatPercent(value,args)
       case 'currency':

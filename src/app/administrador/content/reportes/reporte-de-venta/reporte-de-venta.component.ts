@@ -136,8 +136,8 @@ export class ReporteDeVentaComponent extends DinamicComponent {
   }
 
   dataPdfByDate(pdf: PdfMakeWrapper) {
-    let initialDate = new Date(this.formGenerateReport.get('initialDate')?.value)
-    let endDate = new Date(this.formGenerateReport.get('endDate')?.value)
+    let initialDate = new Date(this.formGenerateReport.get('initialDate')?.value+'T00:00:00')
+    let endDate = new Date(this.formGenerateReport.get('endDate')?.value+'T00:00:00')
     pdf.add(new Txt('Reporte de venta (' +
       new Intl.DateTimeFormat('es-CL').format(initialDate) +
       ' al ' + new Intl.DateTimeFormat('es-CL').format(endDate) + ')').alignment('center')
@@ -196,8 +196,8 @@ export class ReporteDeVentaComponent extends DinamicComponent {
 
   getReportsByDate() {
     this.reportesByDate = []
-    let initialDate = new Date(this.formGenerateReport.get('initialDate')?.value)
-    let endDate = new Date(this.formGenerateReport.get('endDate')?.value)
+    let initialDate = new Date(this.formGenerateReport.get('initialDate')?.value+'T00:00:00')
+    let endDate = new Date(this.formGenerateReport.get('endDate')?.value+'T00:00:00')
     const sell = this.ventasSvc.getSellBydate(initialDate, endDate)
     const pays = this.ventasSvc.getPaysByDate(initialDate, endDate)
     const concatenar = concat(sell, pays)

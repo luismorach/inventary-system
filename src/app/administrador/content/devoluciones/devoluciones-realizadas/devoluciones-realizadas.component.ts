@@ -50,8 +50,8 @@ export class DevolucionesRealizadasComponent extends DinamicComponent {
     this.initialDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1)
     this.endDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0)
     if (initialDate && endDate) {
-      this.initialDate = new Date(initialDate),
-        this.endDate = new Date(endDate)
+      this.initialDate = new Date(initialDate+'T00:00:00'),
+        this.endDate = new Date(endDate+'T00:00:00')
     }
   }
   initTable() {

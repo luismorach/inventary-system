@@ -20,7 +20,7 @@ export class NuevaCompraComponent extends DinamicComponent {
   providers!: Provider[]
   products: Product[] = []
   listProductsToBuy: BuyProduct[] = []
-  product!: Product
+  selectedProduct!: Product
   listProducts: Product[] = []
   date = new Date()
   mainCurrency!: Currency
@@ -80,7 +80,7 @@ export class NuevaCompraComponent extends DinamicComponent {
       this.mainCurrency = mainCurrencyItem;
       this.currencySelected = mainCurrencyItem;
       this.formNewBuy.get('currency')?.setValue(mainCurrencyItem.currency_code);
-      this.selectMoneda();
+      this.selectCurrency();
     }
   }
   setProviders() {
@@ -102,7 +102,7 @@ export class NuevaCompraComponent extends DinamicComponent {
     );
   }
 
-  selectMoneda() {
+  selectCurrency() {
     this.formNewBuy.get('currency')?.valueChanges.pipe(
       map(currencySelected => this.currencies.find(currency => currency.currency_code === currencySelected))
     ).subscribe(currency => {
@@ -122,28 +122,27 @@ export class NuevaCompraComponent extends DinamicComponent {
   }
 
   checkAdded(product: Product) {
-    this.product = product;
-    let añadido: boolean = this.products.some(p => p.id_product === product.id_product);
-    if (añadido) {
-      this.msj.description = 'Este producto ya se encuentra agregado a la compra';
+    this.selectedProduct = product
+    const isAdded = this.products.includes(product)
+    if (isAdded) {
+        this.msj.description = 'Este producto ya se encuentra agregado a la venta'
     }
-    return añadido;
+    return isAdded
   }
 
-  checkExistProduct(product: Product | undefined) {
-    if (!product) {
-      this.msj.description = 'No existe un producto con ese codigo de barra';
-      return true;
+  checkProductExistence(product: Product | undefined) {
+    const productDoesNotExist = product === undefined;
+    if (productDoesNotExist) {
+        this.msj.description = 'No existe un producto con ese código de barras';
     }
-    return false;
+    return productDoesNotExist;
   }
-  checkProduct(product: Product | undefined, quantity: number, ...functions: any) {
-    for (let check of functions) {
-      if (check(product, quantity)) {
-        console.log('error tirado')
-        throw new Error(this.msj.description)
+  validateProduct(product: Product | undefined, quantity: number, ...validators: any) {
+    for (let validator of validators) {
+      if (validator(product, quantity)) {
+          throw new Error(this.msj.description);
       }
-    }
+  }
   }
 
   addProduct(product: Product, quantity: number) {
@@ -156,24 +155,17 @@ export class NuevaCompraComponent extends DinamicComponent {
 
     this.listProductsToBuy.push(newProduct);
     this.products.push(product);
-
-    this.showProductsListAlert({
-      showAlert: false,
-      currentProducts: this.products,
-      productsList: this.listProducts,
-      actionType: 'compra'
-    });
-
+    this.showProductsModal(false)
     this.ref.detectChanges();
     return false;
   }
 
-  calcularSubtotal(product: Product, index: number) {
+  calculateSubtotal(product: Product, index: number) {
     const { buy_price, quantity_products } = this.listProductsToBuy[index];
     return buy_price * quantity_products;
   }
 
-  calcularTotal() {
+  calculateTotal() {
     return this.listProductsToBuy.reduce((total, product) => total + (product.buy_price * product.quantity_products), 0);
   }
 
@@ -182,9 +174,9 @@ export class NuevaCompraComponent extends DinamicComponent {
     this.listProductsToBuy.splice(index, 1)
   }
 
-  openListProductsModal() {
+  showProductsModal(show:boolean) {
     this.showProductsListAlert({
-      showAlert: true, currentProducts: this.products,
+      showAlert: show, currentProducts: this.products,
       productsList: this.listProducts, actionType: 'compra'
     })
   }
@@ -222,16 +214,16 @@ export class NuevaCompraComponent extends DinamicComponent {
   }
 
   handleAlertResponse(response: ResponseAlert) {
-    if (response.type === 'listProducts' && response.response instanceof Object)
-      this.product = response.response as Product
+    if (response.type ===  'availableProducts' && response.response instanceof Object)
+      this.selectedProduct = response.response as Product
     if (response.type === 'Warning' && response.response)
-      this.registrarCompra()
+      this.registerBuy()
     if (response.type === 'Quantity' && Number(response.response)) {
-      this.addProduct(this.product, Number(response.response))
+      this.addProduct(this.selectedProduct, Number(response.response))
     }
   }
 
-  registrarCompra() {
+  registerBuy() {
     this.products.forEach((product: Product, index: number) => {
       this.listProductsToBuy[index].exist_products = Number(product.exist_quantity) +
         Number(this.listProductsToBuy[index].quantity_products)
@@ -250,7 +242,7 @@ export class NuevaCompraComponent extends DinamicComponent {
 
     let buy: Buy = {
       id_buy: 0,
-      total_buy: this.calcularTotal(),
+      total_buy: this.calculateTotal(),
       currency_code: this.formNewBuy.get('currency')?.value.toString(),
       exchange: this.currencySelected.exchange,
       id_provider: Number(this.formNewBuy.get('provider')?.value),

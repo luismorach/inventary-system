@@ -19,7 +19,7 @@ import { SessionStorageService } from 'src/app/storage/session-storage.service';
 export class DetallesVentaComponent extends SaleFunctions {
 
   user: User = {
-    id_user: 0, document_type_user: '', document_number_user: 123, range_user: '',
+    id_user: 0, document_type_user: '', document_number_user: '123', range_user: '',
     names_user: '', last_names_user: '', phone_number_user: 12, gander_user: '', id_register: 12,
     email_user: '', password_user: '', state_user: '',
   }

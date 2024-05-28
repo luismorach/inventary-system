@@ -20,7 +20,7 @@ export class AuthService {
   }
   public changePassword(token: string, newPassword: string) {
     let header = new HttpHeaders({
-      'authorization': token
+      Authorization: `bearer ${token}` 
     })
     return this.http.put<Alert>(this.apiURL + 'change-password', { newPassword }, { 'headers': header })
   }

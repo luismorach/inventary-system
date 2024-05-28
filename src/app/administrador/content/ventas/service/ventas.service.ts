@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Alert, SellProduct, Sell,User,Client, Payment } from 'src/app/interfaces/interfaces';
+import { Alert, SellProduct, Sell, Payment } from 'src/app/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,12 @@ export class VentasService {
     return this.http.get<Sell[]>(this.apiURL);
   }
   public getSellsBydate(initialDate:Date,endDate:Date): Observable<Sell[]> {
-    return this.http.get<Sell[]>(this.apiURL+'/'+new Intl.DateTimeFormat('es-CL').format(initialDate)
-    +'/'+new Intl.DateTimeFormat('es-CL').format(endDate));
+    return this.http.get<Sell[]>(this.apiURL+'/'+initialDate.toISOString()
+    +'/'+endDate.toISOString());
   }
   public getSellBydate(initialDate:Date,endDate:Date): Observable<Sell[]> {
-    return this.http.get<Sell[]>(this.apiURL+'ByDate/'+
-    new Intl.DateTimeFormat('es-CL').format(initialDate)
-    +'/'+new Intl.DateTimeFormat('es-CL').format(endDate));
+    return this.http.get<Sell[]>(this.apiURL+'ByDate/'+initialDate.toISOString()
+    +'/'+endDate.toISOString());
   }
   //accedo al backend para obtener datos de la caja cuyo id se pasa como parametro
   public getSell(id_Sell: number): Observable<Sell[]> {

@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild } from '
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ResponseAlert, TableColumn, TableInfo, TableResponse, User } from 'src/app/interfaces/interfaces';
+import { ResponseAlert, SignUp, TableColumn, TableInfo, TableResponse, User } from 'src/app/interfaces/interfaces';
 import { ComunicatorComponetsService } from 'src/app/services/comunicator/comunicator-componets.service';
 import { DinamicTable } from 'src/app/utils/DinamicTable';
 import { UsuariosService } from '../service/usuarios.service';
 import { DinamicComponent } from 'src/app/utils/DinamicComponent';
+import { SessionStorageService } from 'src/app/storage/session-storage.service';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -19,7 +20,7 @@ export class ListaUsuariosComponent extends DinamicComponent {
   userToDelete!: User;
   subscriptions: Subscription[] = []
   tableInfo: TableInfo = {
-    tableTitle: 'Uusarios Registrados',
+    tableTitle: 'Usuarios Registrados',
     searchField: 'names_user',
     enablePagination: true,
     enableSearch:true
@@ -39,7 +40,7 @@ export class ListaUsuariosComponent extends DinamicComponent {
 
   constructor(protected override comunicatorSvc: ComunicatorComponetsService,
     protected override router: Router, private route: ActivatedRoute,
-    private usersSvc: UsuariosService) {
+    private usersSvc: UsuariosService,private sessionStorageService:SessionStorageService) {
     super(comunicatorSvc, router)
   }
   ngOnInit() {
@@ -56,10 +57,10 @@ export class ListaUsuariosComponent extends DinamicComponent {
     }
   }
   deleteMyAccountFromList() {
-    const account = sessionStorage.getItem('id_user')
+    const account = this.sessionStorageService.getItem<SignUp>('user')
     if (account) {
       let indexMyAccount=-1
-      const myUser = this.users.find((user) => user.id_user === Number(account))
+      const myUser = this.users.find((user) => user.id_user === Number(account.id_user))
       if (myUser)
         indexMyAccount=this.users.indexOf(myUser)
       this.users.splice(indexMyAccount,1)

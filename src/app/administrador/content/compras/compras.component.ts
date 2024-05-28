@@ -11,17 +11,17 @@ import { ComunicatorComponetsService } from 'src/app/services/comunicator/comuni
 })
 export class ComprasComponent {
   title:string[]=[];
-  comunicatorData!:Subscription
   msjListProducts!:AlertListProducts
+  subscriptions:Subscription[]=[]
   @ViewChild('listProducts') ListProducts?: ElementRef;
   constructor(private comunicatorSvc:ComunicatorComponetsService,
     private ref:ChangeDetectorRef) {}
 
   ngOnInit(){
-    this.comunicatorData=this.comunicatorSvc.getTitleComponent().pipe(tap(res=>this.title=res))
-    .subscribe(res=>this.ref.detectChanges());
+    this.subscriptions.push(this.comunicatorSvc.getTitleComponent().pipe(tap(res=>this.title=res))
+    .subscribe(res=>this.ref.detectChanges()));
 
-    this.comunicatorSvc.getInfoAlertListProducts().subscribe(res => {
+    this.subscriptions.push(this.comunicatorSvc.getInfoAlertListProducts().subscribe(res => {
       if (res && res.showAlert === true&& res.actionType==='compra') {
         this.msjListProducts = res
         this.ListProducts?.nativeElement.showModal()
@@ -29,12 +29,12 @@ export class ComprasComponent {
       } else {
         this.ListProducts?.nativeElement.close()
       }
-    })
-  }
+    }))
+  } 
 
   receiveMessageListProducts(response: any) {
     let ResponseAlert: ResponseAlert = {
-      type: 'listProducts',
+      type: 'availableProducts',
       response: response
     }
     this.comunicatorSvc.setResponseAlert(ResponseAlert)
@@ -44,6 +44,6 @@ export class ComprasComponent {
     }
   }
   ngOnDestroy() {
-    (this.comunicatorData)?this.comunicatorData.unsubscribe():null
+    this.subscriptions.forEach((subscription) => (subscription) ? subscription.unsubscribe() : null)
   }
 }

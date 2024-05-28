@@ -8,6 +8,7 @@ import { Buy,Alert, BuyProduct } from 'src/app/interfaces/interfaces';
 })
 export class ComprasService {
 
+
   private apiURL = 'http://localhost:3000/buys';
   constructor(private http: HttpClient) { }
 
@@ -16,8 +17,7 @@ export class ComprasService {
     return this.http.get<Buy[]>(this.apiURL);
   }
   public getBuysBydate(initialDate:Date,endDate:Date): Observable<Buy[]> {
-    return this.http.get<Buy[]>(this.apiURL+'/'+new Intl.DateTimeFormat('es-CL').format(initialDate)
-    +'/'+new Intl.DateTimeFormat('es-CL').format(endDate));
+    return this.http.get<Buy[]>(this.apiURL+'/'+initialDate.toISOString() +'/'+endDate.toISOString());
   }
   //accedo al backend para obtener datos de la caja cuyo id se pasa como parametro
   public getBuy(id_buy: number): Observable<Buy[]> {
